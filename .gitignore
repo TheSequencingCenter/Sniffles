@@ -1,3 +1,7 @@
+# directories
+snifflesvenv/
+
+# files
 .DS_Store
 src/sniffles.egg-info
 dist
