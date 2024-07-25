@@ -15,13 +15,12 @@ You can install Sniffles2 using pip or conda using:
 
 `pip install sniffles`
 
-or
+Note:
+In the file resmon.py, comment out the shebang line.  This python interpreter conflicts with the virtual environment interpreter.
+```
+# #!/usr/bin/env python3
+```
 
-`conda install sniffles=2.4`
-
-If you previously installed Sniffles1 using conda and want to upgrade to Sniffles2, you can use:
-
-`conda update sniffles=2.4`
 
 ## Requirements
 * Python >= 3.10
