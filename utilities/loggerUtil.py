@@ -27,9 +27,9 @@ except Exception as e:
 try:
     # Identify the platform
     if platform.system() == 'Darwin':  # macOS
-        logs_file = os.path.join(os.environ['HOME'], 'Downloads', 'DeepVariant', 'logs', 'logs.txt')
+        logs_file = os.path.join(os.environ['HOME'], 'Downloads', 'Sniffles', 'logs', 'logs.txt')
     elif platform.system() == 'Linux':  # Linux, including Ubuntu
-        logs_file = os.path.join(os.environ['HOME'], 'PepperPipeline', 'logs', 'logs.txt')
+        logs_file = os.path.join(os.environ['HOME'], 'Sniffles', 'logs', 'logs.txt')
     else:
         raise ValueError("Error: unsupported platform")
     

@@ -8,7 +8,6 @@ import os
 import shutil
 import subprocess
 import sys
-import wget
 
 # Local application/library specific imports
 from utilities.fileUtil   import clear_files
@@ -112,9 +111,9 @@ def set_environment_variables() -> None:
     # os.environ['DEEPVARIANT_VCF_FILE']   = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.vcf.gz"
     # os.environ['DEEPVARIANT_GVCF_FILE']  = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.g.vcf.gz"
 
-    # # SNIFFLES
-    # os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    # os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
+    # SNIFFLES
+    os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
+    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
 
     # THREADS
     os.environ['THREADS']                = '14'
@@ -670,6 +669,7 @@ if __name__ == "__main__":
 
         # # delete all files in subdirectories. Use with caution.
         # # runtime: 1 min.
+        # logger.info("Clear files...")
         # clear_files()
 
         # # Add new mappings
@@ -713,10 +713,10 @@ if __name__ == "__main__":
         #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
         #     sys.exit(1)
 
-        # convert pod5 file to bam file
-        # runtime: 5 min.
-        logger.info("Convert pod5 to bam...")
-        convert_pod5_to_bam()
+        # # 1. convert pod5 file to bam file
+        # # runtime: 5 min.
+        # logger.info("Convert pod5 to bam...")
+        # convert_pod5_to_bam()
 
         # # convert fast5 file to bam file
         # # runtime: 5 min.
@@ -753,10 +753,10 @@ if __name__ == "__main__":
         # logger.info("Create bam index file...")
         # create_bam_index_file()
 
-        # # 7. sort bam file
-        # # runtime: 1 min.
-        # logger.info("Sort bam file...")
-        # sort_bam_file()
+        # 2. sort bam file
+        # runtime: 1 min.
+        logger.info("Sort bam file...")
+        sort_bam_file()
 
         # # 8. create sorted bam index file
         # # runtime: 1 min.
@@ -811,7 +811,7 @@ if __name__ == "__main__":
         # logger.info("Perform variant calling...")
         # run_deepvariant()
 
-        # 17. perform structural variant calling
+        # 3. perform structural variant calling
         # runtime: 10 min.
         logger.info("Perform structural variant calling...")
         run_sniffles()
