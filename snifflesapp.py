@@ -40,7 +40,7 @@ def set_environment_variables() -> None:
             logger.error("ERROR: unknown home directory setting")
             sys.exit(1)
     except ValueError as e:
-        logger.error(f"Error: an unexpedted error occured{e}")
+        logger.error(f"Error: an unexpected error occured{e}")
         sys.exit(1)
 
     # SAMPLE
@@ -48,7 +48,6 @@ def set_environment_variables() -> None:
     # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
 
     # MAIN DIRS
-    # os.environ['TRAIN_DIR']              = f"{os.environ['BASE_DIR']}/data/PEPPER_TRAINING"
     os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
     os.environ['OUTPUT_DIR']             = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
 
@@ -78,12 +77,9 @@ def set_environment_variables() -> None:
     # # MODELS
     os.environ['DORADO_MODELS']          = f"{os.environ['BASE_DIR']}/dorado_models"
 
-    # # MODEL EVALUATION
-    # os.environ['VCF_FILE']               = f"{os.environ['EVAL_OUTPUT_DIR']}/PEPPER_VARIANT_FULL.vcf.gz"
-
     # SNIFFLES
-    os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
+    os.environ['SNIFFLES_FILES_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
+    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_FILES_DIR']}/sniffles.vcf.gz"
 
     # THREADS
     os.environ['THREADS']                = '14'
@@ -315,10 +311,10 @@ if __name__ == "__main__":
         logger.info("Set environment variables...")
         set_environment_variables()
 
-        # # delete all files in subdirectories. Use with caution.
-        # # runtime: 1 min.
-        # logger.info("Clear files...")
-        # clear_files()
+        # delete all files in subdirectories. Use with caution.
+        # runtime: 1 min.
+        logger.info("Clear files...")
+        clear_files()
 
         # # Add new mappings
         # add_mapping("test",       "data/input/test/input3.txt",       "data/output/test/output3.txt")
@@ -411,10 +407,10 @@ if __name__ == "__main__":
         # logger.info("Create bam index file...")
         # create_bam_index_file()
 
-        # 8. perform structural variant calling
-        # runtime: 10 min.
-        logger.info("Perform structural variant calling...")
-        run_sniffles()
+        # # 8. perform structural variant calling
+        # # runtime: 10 min.
+        # logger.info("Perform structural variant calling...")
+        # run_sniffles()
 
         logger.info("Finish PepperPipeline...")
 
