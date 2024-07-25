@@ -40,7 +40,7 @@ def set_environment_variables() -> None:
             logger.error("ERROR: unknown home directory setting")
             sys.exit(1)
     except ValueError as e:
-        logger.error(f"Error: an unexpedted error occured{e}")
+        logger.error(f"Error: an unexpected error occured{e}")
         sys.exit(1)
 
     # SAMPLE
@@ -48,7 +48,6 @@ def set_environment_variables() -> None:
     # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
 
     # MAIN DIRS
-    # os.environ['TRAIN_DIR']              = f"{os.environ['BASE_DIR']}/data/PEPPER_TRAINING"
     os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
     os.environ['OUTPUT_DIR']             = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
 
@@ -58,62 +57,29 @@ def set_environment_variables() -> None:
     # FAST5
     os.environ['FAST5_FILE']             = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
-    # # FASTQ
-    # os.environ['FASTQ_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTQ_FILES"
-    # os.environ['FASTQ_FILE']             = f"{os.environ['INPUT_DIR']}/FASTQ_FILES/{sample_file_name}.fastq"
+    # FASTQ
+    os.environ['FASTQ_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTQ_FILES"
+    os.environ['FASTQ_FILE']             = f"{os.environ['INPUT_DIR']}/FASTQ_FILES/{sample_file_name}.fastq"
 
-    # # FASTA
-    # os.environ['FASTA_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTA_FILES"
-    # os.environ['FASTA_FILE']             = f"{os.environ['INPUT_DIR']}/FASTA_FILES/{sample_file_name}.fasta"
+    # FASTA
+    os.environ['FASTA_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTA_FILES"
+    os.environ['FASTA_FILE']             = f"{os.environ['INPUT_DIR']}/FASTA_FILES/{sample_file_name}.fasta"
 
     # # BAM
     os.environ['BAM_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/BAM_FILES"
     os.environ['BAM_FILE']               = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
     os.environ['BAM_SORTED_FILE']        = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
 
-    # # TRUTH VCF
-    # os.environ['TRUTH_VCF_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES"
-    # os.environ['TRUTH_VCF_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
-
-    # # TRUTH BED
-    # os.environ['TRUTH_BED_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES"
-    # os.environ['TRUTH_BED_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.bed"
-
-    # # REFERENCE 
-    # os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
-    # os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
-
-    # # TRAIN TEST IMAGES
-    # os.environ['TRAIN_OUTPUT_DIR']       = f"{os.environ['INPUT_DIR']}/PEPPER_TRAIN_IMAGES"
-    # os.environ['TEST_OUTPUT_DIR']        = f"{os.environ['INPUT_DIR']}/PEPPER_TEST_IMAGES"
+    # REFERENCE 
+    os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
+    os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
 
     # # MODELS
     os.environ['DORADO_MODELS']          = f"{os.environ['BASE_DIR']}/dorado_models"
-    # os.environ['MODEL_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/trained_models"
-    # os.environ['MODEL']                  = f"{os.environ['MODEL_OUTPUT_DIR']}/trained_models_07112024_195240/PEPPER_VARIANT_STEP_20000_checkpoint.pkl"
-
-    # # MODEL EVALUATION
-    # os.environ['EVAL_OUTPUT_DIR']        = f"{os.environ['OUTPUT_DIR']}/pepper_output/pepper_eval_model"
-    # os.environ['VCF_FILE']               = f"{os.environ['EVAL_OUTPUT_DIR']}/PEPPER_VARIANT_FULL.vcf.gz"
-    # os.environ['HAPPY_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/happy_outputs"
-    # os.environ['HAPPY_OUTPUT_FILE']      = f"{os.environ['HAPPY_OUTPUT_DIR']}/HG002_pepper_model_07112024_195240"
-
-    # # REPLACE MODEL
-    # os.environ['PEPPER_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/pepper_deepvariant_output"
-
-    # # MARGIN
-    # os.environ['MARGIN_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/margin_output"
-    # os.environ['MARGIN_OUTPUT_PREFIX']   = f"{os.environ['MARGIN_OUTPUT_DIR']}/{sample_file_name}"
-    # os.environ['MARGIN_PARAMETER_FILE']  = "allParams.phase_vcf.ont.json"
-
-    # # DEEPVARIANT
-    # os.environ['DEEPVARIANT_OUTPUT_DIR'] = f"{os.environ['OUTPUT_DIR']}/deepvariant_output"
-    # os.environ['DEEPVARIANT_VCF_FILE']   = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.vcf.gz"
-    # os.environ['DEEPVARIANT_GVCF_FILE']  = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.g.vcf.gz"
 
     # SNIFFLES
-    os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
+    os.environ['SNIFFLES_FILES_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
+    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_FILES_DIR']}/sniffles.vcf.gz"
 
     # THREADS
     os.environ['THREADS']                = '14'
@@ -233,7 +199,7 @@ def convert_fastq_to_fasta() -> None:
     command = (
         "time seqtk seq "
         f"-a {os.environ['FASTQ_FILE']} > " 
-        f"{os.environ['FASTA_FILE']}"
+        f"   {os.environ['FASTA_FILE']}"
     )
     run_command(command)
 
@@ -313,328 +279,6 @@ def create_sorted_bam_index_file() -> None:
         "time samtools index "
         f"-@ {os.environ['THREADS']} "
         f"   {os.environ['BAM_SORTED_FILE']}"
-    )
-    run_command(command)
-
-def create_truth_vcf_index_file() -> None:
-    """Create truth vcf index file."""
-
-    # delete existing vcf index files with suffix .tbi
-    truth_vcf_files_dir = os.environ.get('TRUTH_VCF_FILES_DIR')
-
-    if truth_vcf_files_dir:
-        for filename in os.listdir(truth_vcf_files_dir):
-            if filename.endswith('.tbi'):
-                file_path = os.path.join(truth_vcf_files_dir, filename)
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-
-    command = (
-        "time tabix "
-        f"{os.environ['TRUTH_VCF_FILE']}"
-    )
-    run_command(command)
-
-def make_train_images(region: str, downsample_ratio: float, precision: float) -> None:
-    """
-    Run make_train_images command with specified parameters.
-
-    Parameters:
-        -b  : Input sorted BAM file.
-        -f  : Input reference fasta file.
-        -tv : Input truth VCF file.
-        -r  : Regions (chr1-19 for training).
-        -rb : GIAB high-confidence regions bed file.
-        -o  : Output directory.
-        -d  : Downsample fraction.
-        -p  : Probability of a homozygous site being selected for training. This is to maintain class balance.
-        --ont_r9_guppy5_sup : Use ONT presets for candidate finding.
-    """
-
-    # delete existing training image files
-    train_image_files_dir = os.environ.get('TRAIN_OUTPUT_DIR')
-
-    if train_image_files_dir:
-        for filename in os.listdir(train_image_files_dir):
-            file_path = os.path.join(train_image_files_dir, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-
-    command = (
-        "time pepper_variant_train make_train_images "
-        f"-b   {os.environ['BAM_SORTED_FILE']} "
-        f"-f   {os.environ['REF_FILE']} "
-        f"-tv  {os.environ['TRUTH_VCF_FILE']} "
-        f"-rb  {os.environ['TRUTH_BED_FILE']} "
-        f"-o   {os.environ['TRAIN_OUTPUT_DIR']} "
-        f"-t   {os.environ['THREADS']} "
-        f"-r   {region} "
-        f"-d   {downsample_ratio} "
-        f"-p   {precision} "
-        "--ont_r9_guppy5_sup"
-    )
-    run_command(command)
-
-def make_test_images(region: str, downsample_ratio: float, precision: float) -> None:
-    """
-    Run make_train_images command with specified parameters.
-
-    Parameters:
-        -b  : Input sorted BAM file.
-        -f  : Input reference fasta file.
-        -tv : Input truth VCF file.
-        -r  : Regions (chr20 for test).
-        -rb : GIAB high-confidence regions bed file.
-        -o  : Output directory.
-        -d  : Downsample fraction.
-        -p  : Probability of a homozygous site being selected for training. This is to maintain class balance.
-        --ont_r9_guppy5_sup : Use ONT presets for candidate finding.
-    """
-
-    # delete existing testing image files
-    test_image_files_dir = os.environ.get('TEST_OUTPUT_DIR')
-
-    if test_image_files_dir:
-        for filename in os.listdir(test_image_files_dir):
-            file_path = os.path.join(test_image_files_dir, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-
-    command = (
-        "time pepper_variant_train make_train_images "
-        f"-b   {os.environ['BAM_SORTED_FILE']} "
-        f"-f   {os.environ['REF_FILE']} "
-        f"-tv  {os.environ['TRUTH_VCF_FILE']} "
-        f"-rb  {os.environ['TRUTH_BED_FILE']} "
-        f"-o   {os.environ['TEST_OUTPUT_DIR']} "
-        f"-t   {os.environ['THREADS']} "
-        f"-r   {region} "
-        f"-d   {downsample_ratio} "
-        f"-p   {precision} "
-        "--ont_r9_guppy5_sup"
-    )
-    run_command(command)
-
-def train_model() -> None:
-    """
-    Run train_model command with specified parameters. Requires Nvidia GPU's.
-
-    Must transfer training and test images from ubuntu development machine to AWS S3 bucket and then to AWS EC2.
-
-    Parameters:
-        -train : Path to train images directory.
-        -test  : Path to test images directory.
-        -o     : Output directory where models will be saved.
-        -bs    : Batch size during training.
-        -lr    : Learning rate value.
-        -wd    : Weight decay value.
-        -s     : Step size.
-        -e     : Total epochs.
-        -w     : Number of workers.
-        --test_batch_size : Batch size during test (does not affect training).
-        -g     : Set to use Nvidia GPUs.
-
-    AWS:
-        g4dn.xlarge, vCPU = 4, RAM = 16 MiB, Disk = SSD, Net bandwidth up to 25 Gbit / sec.
-
-    Notes:
-        This step may need high-speed bandwith to RAM.  And may need lots of RAM.
-    """
-    command = (
-        "time pepper_variant_train train_model "
-        f"-train {os.environ['TRAIN_OUTPUT_DIR']} "
-        f"-test  {os.environ['TEST_OUTPUT_DIR']} "
-        f"-o     {os.environ['MODEL_OUTPUT_DIR']} "
-        "-bs     128 "
-        "-lr     0.001 "
-        "-wd     0.00001 "
-        "-s      10000 "
-        "-e      10 " # default 1000
-        "-w      0 "
-        "--test_batch_size 512 "
-        "-g"
-    )
-    run_command(command)
-
-def call_variant() -> None:
-    """
-    Run the call_variant command with the specified parameters.
-
-    Parameters:
-        -b  : Input BAM file.
-        -f  : Input reference fasta file.
-        -m  : Input model file.
-        -o  : Output directory.
-        -s  : Sample name.
-        -t  : Number of threads.
-        -w  : Window size.
-        -bs : Batch size.
-        -r  : Regions (chr20 for test).
-        --ont_r9_guppy5_sup : Use ONT presets for candidate finding.
-    """
-    command = (
-        "time pepper_variant call_variant "
-        f"-b  {os.environ['BAM_FILE']} "
-        f"-f  {os.environ['REF_FILE']} "
-        f"-m  {os.environ['MODEL']} "
-        f"-o  {os.environ['EVAL_OUTPUT_DIR']} "
-        f"-t  {os.environ['THREADS']} "
-        "-s   HG003 "
-        "-w   0 "
-        "-bs  512 "
-        "-r   chr20 "
-        "--ont_r9_guppy5_sup"
-    )
-    run_command(command)
-
-def run_benchmark() -> None:
-    """
-    Run hap.py evaluation with specified parameters.
-    
-    Parameters:
-        -f          : Truth BED file.
-        -r          : Reference fasta file.
-        -o          : Output directory.
-        -l          : Regions (chr20 for test).
-        --pass-only : Only evaluate passing variants.
-        --no-roc    : Do not generate ROC curves.
-        --no-json   : Do not generate JSON output.
-        --engine    : Evaluation engine.
-        --threads   : Number of threads.
-
-    Ignore this warning message.  The reference file is set explicitely with the "-r" parameter.
-    WARNING  No reference file found at default locations. You can set the environment variable 'HGREF' or 'HG19' to point to a suitable Fasta file.
-    """
-    command = (
-        "time docker run "
-        "-v    /home/seqcenter/PepperPipeline:/home/seqcenter/PepperPipeline "
-        "-v    /data:/data "
-        "-v    /data2:/data2 "
-        "jmcdani20/hap.py:v0.3.12 "
-        "/opt/hap.py/bin/hap.py "
-        f"-f   {os.environ['TRUTH_BED_FILE']} "
-        f"-r   {os.environ['REF_FILE']} "
-        f"     {os.environ['TRUTH_VCF_FILE']} "
-        f"     {os.environ['VCF_FILE']} "
-        f"-o   {os.environ['HAPPY_OUTPUT_FILE']} "
-        "-l    chr20 "
-        "--pass-only "
-        "--no-roc "
-        "--no-json "
-        "--engine=vcfeval "
-        f"--threads={os.environ['THREADS']}"
-    )
-    run_command(command)
-    
-def run_replace_model() -> None:
-    """
-    Run the run_pepper_margin_deepvariant command with the specified parameters.
-    
-    Parameters: 
-        -b  : Input BAM file.
-        -f  : Input reference fasta file.
-        -o  : Output directory.docs/html/
-        -t  : Number of threads.
-    """
-    command = (
-        "time docker run "
-        f"-v   {os.environ['BASE_DIR']}:{os.environ['BASE_DIR']} "
-        f"-v   {os.environ['INPUT_DIR']}:{os.environ['INPUT_DIR']} "
-        f"-v   {os.environ['OUTPUT_DIR']}:{os.environ['OUTPUT_DIR']} "
-        "kishwars/pepper_deepvariant:r0.8 "
-        "run_pepper_margin_deepvariant call_variant "
-        f"-b   {os.environ['BAM_FILE']} "
-        f"-f   {os.environ['REF_FILE']} "
-        f"-o   {os.environ['PEPPER_OUTPUT_DIR']} "
-        f"-t   {os.environ['THREADS']} "
-        f"--pepper_model {os.environ['MODEL']} "
-        "--ont_r9_guppy5_sup"
-    )
-    run_command(command)
-
-def run_margin() -> None:
-    """
-    Perform haplotyping with margin.
-    
-    Parameters:
-        -o : Output prefix name.
-        -t : Number of threads.
-    """
-
-    # we have to modify the paths to map the ubuntu host paths to the docker paths.  Should fix this eventually by replacing the docker file.
-    base_path      = os.environ['BASE_DIR']
-    bam_file       = os.environ['BAM_FILE'].replace(base_path, "")
-    ref_file       = os.environ['REF_FILE'].replace(base_path, "")
-    vcf_file       = os.environ['VCF_FILE'].replace(base_path, "")
-    parameter_file = os.environ['MARGIN_PARAMETER_FILE']
-    output_dir     = os.environ['MARGIN_OUTPUT_DIR'].replace(base_path, "")
-
-    command = (
-        "time docker run "
-        "-v /home/seqcenter/PepperPipeline/data:/data "
-        "pepper_deepvariant "
-        "margin phase "
-        f"{bam_file} "
-        f"{ref_file} "
-        # f"{vcf_file} "
-        f"HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz "
-        f"/opt/margin_dir/params/phase/{parameter_file} "
-        f"-o {output_dir} "
-        f"-t {os.environ['THREADS']}"
-    )
-    run_command(command)
-
-def run_deepvariant() -> None:
-    """
-    Perform variant calling.
-    
-    Parameters:
-        --model_type       : Replace this string with exactly one of the following [WGS,WES,PACBIO,ONT_R104,HYBRID_PACBIO_ILLUMINA].
-        --ref              : Reference genome.
-        --reads            : Input BAM file.
-        --output_vcf       : Output VCF file. 
-        --output_gvcf      : Output gVCF file
-        --num_shards       : Number of threads.
-        --logging_dir      : Optional. This saves the log output for each stage separately.
-        --haploid_contigs  : Optional. Heterozygous variants in these contigs will be re-genotyped as the most likely of reference or homozygous alternates. For a sample with karyotype XY, it should be set to "chrX,chrY" for GRCh38 and "X,Y" for GRCh37. For a sample with karyotype XX, this should not be used.
-        --par_regions_bed= : Optional. If --haploid_contigs is set, then this can be used to provide PAR regions to be excluded from genotype adjustment. Download links to this files are available in this page.
-        --par_regions_bed="/input/GRCh3X_par.bed" " : Optional. If --haploid_contigs is set, then this can be used to provide PAR regions to be excluded from genotype adjustment. Download links to this files are available in this page.
-        --dry_run          : Default is false. If set to true, commands will be printed out but not executed.
-    """
-
-    # we have to modify the paths to map the ubuntu host paths to the docker paths.  Should fix this eventually by replacing the docker file.
-    train_input_path  = os.environ['INPUT_DIR']
-    train_output_path = os.environ['OUTPUT_DIR']
-    ref_file          = os.environ['REF_FILE'].replace(train_input_path, "")
-    bam_sorted_file   = os.environ['BAM_SORTED_FILE'].replace(train_input_path, "")
-    vcf_file          = os.environ['DEEPVARIANT_VCF_FILE'].replace(train_output_path, "")
-    gvcf_file         = os.environ['DEEPVARIANT_GVCF_FILE'].replace(train_output_path, "")
-
-    # BIN_VERSION="1.6.0"
-    command = (
-        "time docker run "
-        f"-v {os.environ['INPUT_DIR']}:/input "             
-        f"-v {os.environ['OUTPUT_DIR']}:/output "   
-        "google/deepvariant:1.6.0 "                       # BIN_VERSION
-        "/opt/deepvariant/bin/run_deepvariant "
-        "--model_type=WGS "                               # Replace this string with exactly one of the following [WGS,WES,PACBIO,ONT_R104,HYBRID_PACBIO_ILLUMINA]
-        # f"--ref=/input/{os.environ['REF_FILE']} "
-        # f"--reads=/input/{os.environ['BAM_FILE']} "
-        # f"--output_vcf=/output/{os.environ['DEEPVARIANT_VCF_FILE']} "
-        # f"--output_gvcf=/output/{os.environ['DEEPVARIANT_GVCF_FILE']} "
-        f"--ref=/input{ref_file} "
-        f"--reads=/input{bam_sorted_file} "
-        f"--output_vcf=/output{vcf_file} "
-        f"--output_gvcf=/output{gvcf_file} "              # Optional. genomic VCF file.
-        f"--num_shards={os.environ['THREADS']} "
-        # "--logging_dir     = /output/logs "             # Optional. This saves the log output for each stage separately.
-        # "--haploid_contigs = "chrX,chrY" "              # Optional. Heterozygous variants in these contigs will be re-genotyped as the most likely of reference or homozygous alternates. For a sample with karyotype XY, it should be set to "chrX,chrY" for GRCh38 and "X,Y" for GRCh37. For a sample with karyotype XX, this should not be used.
-        # "--par_regions_bed = "/input/GRCh3X_par.bed" "  # Optional. If --haploid_contigs is set, then this can be used to provide PAR regions to be excluded from genotype adjustment. Download links to this files are available in this page.
-        "--dry_run = false"                               # Default is false. If set to true, commands will be printed out but not executed.
     )
     run_command(command)
 
@@ -723,103 +367,50 @@ if __name__ == "__main__":
         # logger.info("Convert fast5 to bam...")
         # convert_fast5_to_bam()
 
-        # # 1. convert pod5 file to fastq file
-        # # runtime: 5 min.
-        # logger.info("Convert pod5 to fastq...")
-        # convert_pod5_to_fastq()
+        # 1. convert pod5 file to fastq file
+        # runtime: 5 min.
+        logger.info("Convert pod5 to fastq...")
+        convert_pod5_to_fastq()
 
-        # # 2. convert fastq file to fasta file
-        # # runtime: 5 min.
-        # logger.info("Convert fastq to fasta...")
-        # convert_fastq_to_fasta()
+        # 2. convert fastq file to fasta file
+        # runtime: 5 min.
+        logger.info("Convert fastq to fasta...")
+        convert_fastq_to_fasta()
 
-        # # 3. create fasta index file
-        # # runtime: 3 min.
-        # logger.info("Create fasta index file...")
-        # create_fasta_index_file()
+        # 3. create fasta index file
+        # runtime: 3 min.
+        logger.info("Create fasta index file...")
+        create_fasta_index_file()
 
-        # # 4. create reference genome index file
-        # # runtime: 3 min.(peppervenv) seqcenter@seqcenter-MS-7C75:~/PepperPipelin
-        # logger.info("Create reference genome index file...")
-        # create_ref_genome_index_file()
+        # 4. create reference genome index file
+        # runtime: 3 min.
+        logger.info("Create reference genome index file...")
+        create_ref_genome_index_file()
 
-        # # 5. align fasta file to reference genome
-        # # runtime: 3 min.
-        # logger.info("Align fasta to reference genome...")
-        # align_fasta_to_reference()
+        # 5. align fasta file to reference genome
+        # runtime: 3 min.
+        logger.info("Align fasta to reference genome...")
+        align_fasta_to_reference()
 
-        # # 6. create bam index file
-        # # runtime: 1 min.
-        # logger.info("Create bam index file...")
-        # create_bam_index_file()
-
-        # 2. sort bam file
+        # 6. sort bam file
         # runtime: 1 min.
         logger.info("Sort bam file...")
         sort_bam_file()
 
-        # # 8. create sorted bam index file
+        # 7. create sorted bam index file
+        # runtime: 1 min.
+        logger.info("Create sorted bam index file...")
+        create_sorted_bam_index_file()
+
+        # # 7. create bam index file
         # # runtime: 1 min.
-        # logger.info("Create sorted bam index file...")
-        # create_sorted_bam_index_file()
+        # logger.info("Create bam index file...")
+        # create_bam_index_file()
 
-        # # 9. create truth vcf index file
-        # # runtime: 1 min.
-        # logger.info("Create truth vcf index file...")
-        # create_truth_vcf_index_file()
-
-        # # 10. generate training images
-        # # runtime: 158 min. (2.63 hrs.)
-        # logger.info("Generate training images...")
-        # make_train_images(
-        #     region           = 'chr1-19',
-        #     downsample_ratio = 1.0,
-        #     precision        = 0.3
-        # )
-
-        # # 11. generate testing images
-        # # runtime: 3 min.
-        # logger.info("Generate testing images...")
-        # make_test_images(
-        #     region           = 'chr20',
-        #     downsample_ratio = 1.0,
-        #     precision        = 1.0
-        # )
-
-        # # 12. train model with training images. requires nvidia gpu's    #     f"   {os.environ['MARGIN_PARAMETER_FILE']} "
-        # # runtime: 
-        # logger.info("Train model with training images...")
-        # train_model()
-
-        # # 13. generate variant calls
-        # # runtime: 20 min.
-        # logger.info("Generate variant calls...")
-        # call_variant()
-
-        # # 14. benchmark the model
-        # # runtime: 3 min.
-        # logger.info("Benchmark the model...")
-        # run_benchmark()
-
-        # # 15. perform haplotyping
-        # # runtime: 3 min.
-        # logger.info("Perform haplotyping...")
-        # run_margin()
-
-        # # 16. perform variant calling 
-        # # runtime: 3 min.
-        # logger.info("Perform variant calling...")
-        # run_deepvariant()
-
-        # 3. perform structural variant calling
+        # 8. perform structural variant calling
         # runtime: 10 min.
         logger.info("Perform structural variant calling...")
         run_sniffles()
-
-        # # replace default model with trained model
-        # # runtime: 860 min. (14 hrs.)
-        # logger.info("Replace default model with trained model...")
-        # run_replace_model()
 
         logger.info("Finish PepperPipeline...")
 
