@@ -308,7 +308,7 @@ if __name__ == "__main__":
 
     # clear files before starting application
     parser = argparse.ArgumentParser(description="Human genome structural variant caller.")
-    parser.add_argument("--clearfiles", action="store_true", help="Clear files in the specified directories.")
+    parser.add_argument("--clearfiles", action="store_true", help="Clear files before starting application.")
     args   = parser.parse_args()
 
     try:
@@ -375,44 +375,60 @@ if __name__ == "__main__":
         # convert_fast5_to_bam()
 
         # 1. convert pod5 file to fastq file
-        # runtime: 5 min.
-        logger.info("Convert pod5 to fastq...")
-        convert_pod5_to_fastq()
+        try:
+            logger.info("Convert pod5 to fastq...")
+            convert_pod5_to_fastq()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to convert pod5 to fastq: {e}")
 
         # 2. convert fastq file to fasta file
-        # runtime: 5 min.
-        logger.info("Convert fastq to fasta...")
-        convert_fastq_to_fasta()
+        try:
+            logger.info("Convert fastq to fasta...")
+            convert_fastq_to_fasta()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to convert fastq to fasta: {e}")
 
         # 3. create fasta index file
-        # runtime: 3 min.
-        logger.info("Create fasta index file...")
-        create_fasta_index_file()
+        try:
+            logger.info("Create fasta index file...")
+            create_fasta_index_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to create fasta index file: {e}")
 
         # 4. create reference genome index file
-        # runtime: 3 min.
-        logger.info("Create reference genome index file...")
-        create_ref_genome_index_file()
+        try:
+            logger.info("Create reference genome index file...")
+            create_ref_genome_index_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to create reference genome index file: {e}")
 
         # 5. align fasta file to reference genome
-        # runtime: 3 min.
-        logger.info("Align fasta to reference genome...")
-        align_fasta_to_reference()
+        try:
+            logger.info("Align fasta to reference genome...")
+            align_fasta_to_reference()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
         # 6. sort bam file
-        # runtime: 1 min.
-        logger.info("Sort bam file...")
-        sort_bam_file()
+        try:
+            logger.info("Sort bam file...")
+            sort_bam_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to sort bam file: {e}")
 
         # 7. create sorted bam index file
-        # runtime: 1 min.
-        logger.info("Create sorted bam index file...")
-        create_sorted_bam_index_file()
+        try:
+            logger.info("Create sorted bam index file...")
+            create_sorted_bam_index_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
 
         # 8. perform structural variant calling
-        # runtime: 10 min.
-        logger.info("Perform structural variant calling...")
-        run_sniffles()
+        try:
+            logger.info("Perform structural variant calling...")
+            run_sniffles()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
 
         logger.info("Finish PepperPipeline...")
 
