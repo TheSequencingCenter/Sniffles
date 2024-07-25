@@ -34,9 +34,9 @@ def set_environment_variables() -> None:
         # check which server is hosting the code 
         home_dir = os.path.expanduser("~")                             # get home directory
         if home_dir   == '/home/seqcenter':
-            os.environ['BASE_DIR'] = '/home/seqcenter/PepperPipeline'  # for development ubuntu
+            os.environ['BASE_DIR'] = '/home/seqcenter/Sniffles'        # for development ubuntu
         elif home_dir == '/home/ubuntu':
-            os.environ['BASE_DIR'] = '/home/ubuntu/PepperPipeline'     # for production ubuntu on AWS
+            os.environ['BASE_DIR'] = '/home/ubuntu/Sniffles'           # for production ubuntu on AWS
         else:
             logger.error("ERROR: unknown home directory setting")
             sys.exit(1)
@@ -45,13 +45,13 @@ def set_environment_variables() -> None:
         sys.exit(1)
 
     # SAMPLE
-    # sample_file_name = "test"
-    sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
+    sample_file_name = "test"
+    # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
 
     # MAIN DIRS
-    os.environ['TRAIN_DIR']              = f"{os.environ['BASE_DIR']}/data/PEPPER_TRAINING"
-    os.environ['INPUT_DIR']              = f"{os.environ['TRAIN_DIR']}/TRAIN_INPUTS"
-    os.environ['OUTPUT_DIR']             = f"{os.environ['TRAIN_DIR']}/TRAIN_OUTPUTS"
+    # os.environ['TRAIN_DIR']              = f"{os.environ['BASE_DIR']}/data/PEPPER_TRAINING"
+    os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
+    os.environ['OUTPUT_DIR']             = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
 
     # POD5
     os.environ['POD5_FILE']              = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
@@ -59,62 +59,62 @@ def set_environment_variables() -> None:
     # FAST5
     os.environ['FAST5_FILE']             = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
-    # FASTQ
-    os.environ['FASTQ_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTQ_FILES"
-    os.environ['FASTQ_FILE']             = f"{os.environ['INPUT_DIR']}/FASTQ_FILES/{sample_file_name}.fastq"
+    # # FASTQ
+    # os.environ['FASTQ_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTQ_FILES"
+    # os.environ['FASTQ_FILE']             = f"{os.environ['INPUT_DIR']}/FASTQ_FILES/{sample_file_name}.fastq"
 
-    # FASTA
-    os.environ['FASTA_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTA_FILES"
-    os.environ['FASTA_FILE']             = f"{os.environ['INPUT_DIR']}/FASTA_FILES/{sample_file_name}.fasta"
+    # # FASTA
+    # os.environ['FASTA_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTA_FILES"
+    # os.environ['FASTA_FILE']             = f"{os.environ['INPUT_DIR']}/FASTA_FILES/{sample_file_name}.fasta"
 
-    # BAM
+    # # BAM
     os.environ['BAM_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/BAM_FILES"
     os.environ['BAM_FILE']               = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
     os.environ['BAM_SORTED_FILE']        = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
 
-    # TRUTH VCF
-    os.environ['TRUTH_VCF_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES"
-    os.environ['TRUTH_VCF_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
+    # # TRUTH VCF
+    # os.environ['TRUTH_VCF_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES"
+    # os.environ['TRUTH_VCF_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
 
-    # TRUTH BED
-    os.environ['TRUTH_BED_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES"
-    os.environ['TRUTH_BED_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.bed"
+    # # TRUTH BED
+    # os.environ['TRUTH_BED_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES"
+    # os.environ['TRUTH_BED_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.bed"
 
-    # REFERENCE 
-    os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
-    os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
+    # # REFERENCE 
+    # os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
+    # os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
 
-    # TRAIN TEST IMAGES
-    os.environ['TRAIN_OUTPUT_DIR']       = f"{os.environ['INPUT_DIR']}/PEPPER_TRAIN_IMAGES"
-    os.environ['TEST_OUTPUT_DIR']        = f"{os.environ['INPUT_DIR']}/PEPPER_TEST_IMAGES"
+    # # TRAIN TEST IMAGES
+    # os.environ['TRAIN_OUTPUT_DIR']       = f"{os.environ['INPUT_DIR']}/PEPPER_TRAIN_IMAGES"
+    # os.environ['TEST_OUTPUT_DIR']        = f"{os.environ['INPUT_DIR']}/PEPPER_TEST_IMAGES"
 
-    # MODELS
+    # # MODELS
     os.environ['DORADO_MODELS']          = f"{os.environ['BASE_DIR']}/dorado_models"
-    os.environ['MODEL_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/trained_models"
-    os.environ['MODEL']                  = f"{os.environ['MODEL_OUTPUT_DIR']}/trained_models_07112024_195240/PEPPER_VARIANT_STEP_20000_checkpoint.pkl"
+    # os.environ['MODEL_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/trained_models"
+    # os.environ['MODEL']                  = f"{os.environ['MODEL_OUTPUT_DIR']}/trained_models_07112024_195240/PEPPER_VARIANT_STEP_20000_checkpoint.pkl"
 
-    # MODEL EVALUATION
-    os.environ['EVAL_OUTPUT_DIR']        = f"{os.environ['OUTPUT_DIR']}/pepper_output/pepper_eval_model"
-    os.environ['VCF_FILE']               = f"{os.environ['EVAL_OUTPUT_DIR']}/PEPPER_VARIANT_FULL.vcf.gz"
-    os.environ['HAPPY_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/happy_outputs"
-    os.environ['HAPPY_OUTPUT_FILE']      = f"{os.environ['HAPPY_OUTPUT_DIR']}/HG002_pepper_model_07112024_195240"
+    # # MODEL EVALUATION
+    # os.environ['EVAL_OUTPUT_DIR']        = f"{os.environ['OUTPUT_DIR']}/pepper_output/pepper_eval_model"
+    # os.environ['VCF_FILE']               = f"{os.environ['EVAL_OUTPUT_DIR']}/PEPPER_VARIANT_FULL.vcf.gz"
+    # os.environ['HAPPY_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/happy_outputs"
+    # os.environ['HAPPY_OUTPUT_FILE']      = f"{os.environ['HAPPY_OUTPUT_DIR']}/HG002_pepper_model_07112024_195240"
 
-    # REPLACE MODEL
-    os.environ['PEPPER_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/pepper_deepvariant_output"
+    # # REPLACE MODEL
+    # os.environ['PEPPER_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/pepper_deepvariant_output"
 
-    # MARGIN
-    os.environ['MARGIN_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/margin_output"
-    os.environ['MARGIN_OUTPUT_PREFIX']   = f"{os.environ['MARGIN_OUTPUT_DIR']}/{sample_file_name}"
-    os.environ['MARGIN_PARAMETER_FILE']  = "allParams.phase_vcf.ont.json"
+    # # MARGIN
+    # os.environ['MARGIN_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/margin_output"
+    # os.environ['MARGIN_OUTPUT_PREFIX']   = f"{os.environ['MARGIN_OUTPUT_DIR']}/{sample_file_name}"
+    # os.environ['MARGIN_PARAMETER_FILE']  = "allParams.phase_vcf.ont.json"
 
-    # DEEPVARIANT
-    os.environ['DEEPVARIANT_OUTPUT_DIR'] = f"{os.environ['OUTPUT_DIR']}/deepvariant_output"
-    os.environ['DEEPVARIANT_VCF_FILE']   = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.vcf.gz"
-    os.environ['DEEPVARIANT_GVCF_FILE']  = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.g.vcf.gz"
+    # # DEEPVARIANT
+    # os.environ['DEEPVARIANT_OUTPUT_DIR'] = f"{os.environ['OUTPUT_DIR']}/deepvariant_output"
+    # os.environ['DEEPVARIANT_VCF_FILE']   = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.vcf.gz"
+    # os.environ['DEEPVARIANT_GVCF_FILE']  = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.g.vcf.gz"
 
-    # SNIFFLES
-    os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
+    # # SNIFFLES
+    # os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
+    # os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_OUTPUT_DIR']}/sniffles.vcf.gz"
 
     # THREADS
     os.environ['THREADS']                = '14'
@@ -713,10 +713,10 @@ if __name__ == "__main__":
         #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
         #     sys.exit(1)
 
-        # # convert pod5 file to bam file
-        # # runtime: 5 min.
-        # logger.info("Convert pod5 to bam...")
-        # convert_pod5_to_bam()
+        # convert pod5 file to bam file
+        # runtime: 5 min.
+        logger.info("Convert pod5 to bam...")
+        convert_pod5_to_bam()
 
         # # convert fast5 file to bam file
         # # runtime: 5 min.
