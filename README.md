@@ -11,7 +11,7 @@ For improved calling in repetitive regions, Sniffles2 accepts a tandem repeat an
 (see sniffles --help or below for full usage information).
 
 ## Installation
-You can install Sniffles2 using pip or conda using:
+Install Sniffles2 using pip:
 
 `pip install sniffles`
 
