@@ -18,6 +18,8 @@ You can install Sniffles2 using pip or conda using:
 Note:
 In the file resmon.py, comment out the shebang line.  This python interpreter conflicts with the virtual environment interpreter.
 ```
+cd /home/seqcenter/Sniffles/snifflesvenv/lib/python3.10/site-packages/sniffles/utils
+vi resmon.py
 # #!/usr/bin/env python3
 ```
 
