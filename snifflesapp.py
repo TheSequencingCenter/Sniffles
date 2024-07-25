@@ -311,10 +311,10 @@ if __name__ == "__main__":
         logger.info("Set environment variables...")
         set_environment_variables()
 
-        # delete all files in subdirectories. Use with caution.
-        # runtime: 1 min.
-        logger.info("Clear files...")
-        clear_files()
+        # # delete all files in subdirectories. Use with caution.
+        # # runtime: 1 min.
+        # logger.info("Clear files...")
+        # clear_files()
 
         # # Add new mappings
         # add_mapping("test",       "data/input/test/input3.txt",       "data/output/test/output3.txt")
@@ -367,50 +367,50 @@ if __name__ == "__main__":
         # logger.info("Convert fast5 to bam...")
         # convert_fast5_to_bam()
 
-        # # 1. convert pod5 file to fastq file
-        # # runtime: 5 min.
-        # logger.info("Convert pod5 to fastq...")
-        # convert_pod5_to_fastq()
+        # 1. convert pod5 file to fastq file
+        # runtime: 5 min.
+        logger.info("Convert pod5 to fastq...")
+        convert_pod5_to_fastq()
 
-        # # 2. convert fastq file to fasta file
-        # # runtime: 5 min.
-        # logger.info("Convert fastq to fasta...")
-        # convert_fastq_to_fasta()
+        # 2. convert fastq file to fasta file
+        # runtime: 5 min.
+        logger.info("Convert fastq to fasta...")
+        convert_fastq_to_fasta()
 
-        # # 3. create fasta index file
-        # # runtime: 3 min.
-        # logger.info("Create fasta index file...")
-        # create_fasta_index_file()
+        # 3. create fasta index file
+        # runtime: 3 min.
+        logger.info("Create fasta index file...")
+        create_fasta_index_file()
 
-        # # 4. create reference genome index file
-        # # runtime: 3 min.
-        # logger.info("Create reference genome index file...")
-        # create_ref_genome_index_file()
+        # 4. create reference genome index file
+        # runtime: 3 min.
+        logger.info("Create reference genome index file...")
+        create_ref_genome_index_file()
 
-        # # 5. align fasta file to reference genome
-        # # runtime: 3 min.
-        # logger.info("Align fasta to reference genome...")
-        # align_fasta_to_reference()
+        # 5. align fasta file to reference genome
+        # runtime: 3 min.
+        logger.info("Align fasta to reference genome...")
+        align_fasta_to_reference()
 
-        # # 6. sort bam file
-        # # runtime: 1 min.
-        # logger.info("Sort bam file...")
-        # sort_bam_file()
+        # 6. sort bam file
+        # runtime: 1 min.
+        logger.info("Sort bam file...")
+        sort_bam_file()
 
-        # # 7. create sorted bam index file
-        # # runtime: 1 min.
-        # logger.info("Create sorted bam index file...")
-        # create_sorted_bam_index_file()
+        # 7. create sorted bam index file
+        # runtime: 1 min.
+        logger.info("Create sorted bam index file...")
+        create_sorted_bam_index_file()
 
         # # 7. create bam index file
         # # runtime: 1 min.
         # logger.info("Create bam index file...")
         # create_bam_index_file()
 
-        # # 8. perform structural variant calling
-        # # runtime: 10 min.
-        # logger.info("Perform structural variant calling...")
-        # run_sniffles()
+        # 8. perform structural variant calling
+        # runtime: 10 min.
+        logger.info("Perform structural variant calling...")
+        run_sniffles()
 
         logger.info("Finish PepperPipeline...")
 
