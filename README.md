@@ -12,15 +12,8 @@ For improved calling in repetitive regions, Sniffles2 accepts a tandem repeat an
 
 ## Installation
 Install Sniffles2 using pip:
-
-`pip install --no-cache-dir sniffles`
-
-Note:
-In the file resmon.py, comment out the shebang line.  This python interpreter conflicts with the virtual environment interpreter.
 ```
-cd /home/seqcenter/Sniffles/snifflesvenv/lib/python3.10/site-packages/sniffles/utils
-vi resmon.py
-# #!/usr/bin/env python3
+pip install --no-cache-dir sniffles`
 ```
 
 
