@@ -3,6 +3,7 @@
 # Purpose: Human genome structural variant caller.
 
 # Standard library imports
+import argparse
 import json
 import os
 import shutil
@@ -120,7 +121,7 @@ def convert_pod5_to_bam() -> None:
         -x : cpu only
     """
     command = (
-        "time dorado basecaller "
+        "dorado basecaller "
         "-x cpu "
         f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"{os.environ['POD5_FILE']} > " 
@@ -145,7 +146,7 @@ def convert_fast5_to_bam() -> None:
         -x : cpu only
     """
     command = (
-        "time dorado basecaller "
+        "dorado basecaller "
         "-x cpu "
         f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"{os.environ['FAST5_FILE']} > " 
@@ -173,7 +174,7 @@ def convert_pod5_to_fastq() -> None:
                 shutil.rmtree(file_path)
 
     command = (
-        "time dorado basecaller "
+        "dorado basecaller "
         "-x cpu "
         "--emit-fastq "
         f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
@@ -197,7 +198,7 @@ def convert_fastq_to_fasta() -> None:
                 shutil.rmtree(file_path)
 
     command = (
-        "time seqtk seq "
+        "seqtk seq "
         f"-a {os.environ['FASTQ_FILE']} > " 
         f"   {os.environ['FASTA_FILE']}"
     )
@@ -206,7 +207,7 @@ def convert_fastq_to_fasta() -> None:
 def create_fasta_index_file() -> None:
     """Create FASTA index file."""
     command = (
-        "time samtools faidx "
+        "samtools faidx "
         f"{os.environ['FASTA_FILE']}"
     )
     run_command(command)
@@ -226,7 +227,7 @@ def create_ref_genome_index_file() -> None:
                     os.unlink(file_path)
 
     command = (
-        "time samtools faidx "
+        "samtools faidx "
         f"{os.environ['REF_FILE']}"
     )
     run_command(command)
@@ -246,7 +247,7 @@ def align_fasta_to_reference() -> None:
                 shutil.rmtree(file_path)
 
     command = (
-        "time dorado aligner "
+        "dorado aligner "
         f"-t {os.environ['THREADS']} "
         f"   {os.environ['REF_FILE']} "
         f"   {os.environ['FASTA_FILE']} > "
@@ -257,7 +258,7 @@ def align_fasta_to_reference() -> None:
 def create_bam_index_file() -> None:
     """Create bam index file."""
     command = (
-        "time samtools index "
+        "samtools index "
         f"-@ {os.environ['THREADS']} "
         f"   {os.environ['BAM_FILE']}"
     )
@@ -266,7 +267,7 @@ def create_bam_index_file() -> None:
 def sort_bam_file() -> None:
     """Sort bam file."""
     command = (
-        "time samtools sort "
+        "samtools sort "
         f"--threads {os.environ['THREADS']} "
         f"          {os.environ['BAM_FILE']} "
         f"-o        {os.environ['BAM_SORTED_FILE']}"
@@ -276,7 +277,7 @@ def sort_bam_file() -> None:
 def create_sorted_bam_index_file() -> None:
     """Create sorted bam index file."""
     command = (
-        "time samtools index "
+        "samtools index "
         f"-@ {os.environ['THREADS']} "
         f"   {os.environ['BAM_SORTED_FILE']}"
     )
@@ -294,7 +295,7 @@ def run_sniffles() -> None:
     """
 
     command = (
-        "time sniffles "
+        "sniffles "
         f"-i {os.environ['BAM_SORTED_FILE']} "
         f"-v {os.environ['SNIFFLES_VCF_FILE']} "
         f"-t {os.environ['THREADS']} "
@@ -304,6 +305,12 @@ def run_sniffles() -> None:
 
 # main entry point
 if __name__ == "__main__":
+
+    # clear files before starting application
+    parser = argparse.ArgumentParser(description="Human genome structural variant caller.")
+    parser.add_argument("--clearfiles", action="store_true", help="Clear files in the specified directories.")
+    args   = parser.parse_args()
+
     try:
         logger.info("Start PepperPipeline...")
 
@@ -311,10 +318,10 @@ if __name__ == "__main__":
         logger.info("Set environment variables...")
         set_environment_variables()
 
-        # # delete all files in subdirectories. Use with caution.
-        # # runtime: 1 min.
-        # logger.info("Clear files...")
-        # clear_files()
+        # delete all files in subdirectories if --clearfiles is specified
+        if args.clearfiles:
+            logger.info("Clear files...")
+            clear_files()
 
         # # Add new mappings
         # add_mapping("test",       "data/input/test/input3.txt",       "data/output/test/output3.txt")
@@ -401,11 +408,6 @@ if __name__ == "__main__":
         # runtime: 1 min.
         logger.info("Create sorted bam index file...")
         create_sorted_bam_index_file()
-
-        # # 7. create bam index file
-        # # runtime: 1 min.
-        # logger.info("Create bam index file...")
-        # create_bam_index_file()
 
         # 8. perform structural variant calling
         # runtime: 10 min.
