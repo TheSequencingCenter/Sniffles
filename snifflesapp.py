@@ -71,45 +71,15 @@ def set_environment_variables() -> None:
     os.environ['BAM_FILE']               = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
     os.environ['BAM_SORTED_FILE']        = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
 
-    # # TRUTH VCF
-    # os.environ['TRUTH_VCF_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES"
-    # os.environ['TRUTH_VCF_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_VCF_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz"
-
-    # # TRUTH BED
-    # os.environ['TRUTH_BED_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES"
-    # os.environ['TRUTH_BED_FILE']         = f"{os.environ['INPUT_DIR']}/TRUTH_BED_FILES/HG002_GRCh38_1_22_v4.2.1_benchmark.bed"
-
     # REFERENCE 
     os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
     os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
 
-    # # TRAIN TEST IMAGES
-    # os.environ['TRAIN_OUTPUT_DIR']       = f"{os.environ['INPUT_DIR']}/PEPPER_TRAIN_IMAGES"
-    # os.environ['TEST_OUTPUT_DIR']        = f"{os.environ['INPUT_DIR']}/PEPPER_TEST_IMAGES"
-
     # # MODELS
     os.environ['DORADO_MODELS']          = f"{os.environ['BASE_DIR']}/dorado_models"
-    # os.environ['MODEL_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/trained_models"
-    # os.environ['MODEL']                  = f"{os.environ['MODEL_OUTPUT_DIR']}/trained_models_07112024_195240/PEPPER_VARIANT_STEP_20000_checkpoint.pkl"
 
     # # MODEL EVALUATION
-    # os.environ['EVAL_OUTPUT_DIR']        = f"{os.environ['OUTPUT_DIR']}/pepper_output/pepper_eval_model"
     # os.environ['VCF_FILE']               = f"{os.environ['EVAL_OUTPUT_DIR']}/PEPPER_VARIANT_FULL.vcf.gz"
-    # os.environ['HAPPY_OUTPUT_DIR']       = f"{os.environ['OUTPUT_DIR']}/happy_outputs"
-    # os.environ['HAPPY_OUTPUT_FILE']      = f"{os.environ['HAPPY_OUTPUT_DIR']}/HG002_pepper_model_07112024_195240"
-
-    # # REPLACE MODEL
-    # os.environ['PEPPER_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/pepper_deepvariant_output"
-
-    # # MARGIN
-    # os.environ['MARGIN_OUTPUT_DIR']      = f"{os.environ['OUTPUT_DIR']}/margin_output"
-    # os.environ['MARGIN_OUTPUT_PREFIX']   = f"{os.environ['MARGIN_OUTPUT_DIR']}/{sample_file_name}"
-    # os.environ['MARGIN_PARAMETER_FILE']  = "allParams.phase_vcf.ont.json"
-
-    # # DEEPVARIANT
-    # os.environ['DEEPVARIANT_OUTPUT_DIR'] = f"{os.environ['OUTPUT_DIR']}/deepvariant_output"
-    # os.environ['DEEPVARIANT_VCF_FILE']   = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.vcf.gz"
-    # os.environ['DEEPVARIANT_GVCF_FILE']  = f"{os.environ['DEEPVARIANT_OUTPUT_DIR']}/deepvariant.g.vcf.gz"
 
     # SNIFFLES
     os.environ['SNIFFLES_OUTPUT_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
@@ -391,57 +361,57 @@ if __name__ == "__main__":
         #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
         #     sys.exit(1)
 
-        # 1. convert pod5 file to bam file
-        # runtime: 5 min.
-        logger.info("Convert pod5 to bam...")
-        convert_pod5_to_bam()
+        # # 1. convert pod5 file to bam file
+        # # runtime: 5 min.
+        # logger.info("Convert pod5 to bam...")
+        # convert_pod5_to_bam()
 
-        # convert fast5 file to bam file
-        # runtime: 5 min.
-        logger.info("Convert fast5 to bam...")
-        convert_fast5_to_bam()
+        # # convert fast5 file to bam file
+        # # runtime: 5 min.
+        # logger.info("Convert fast5 to bam...")
+        # convert_fast5_to_bam()
 
-        # 1. convert pod5 file to fastq file
-        # runtime: 5 min.
-        logger.info("Convert pod5 to fastq...")
-        convert_pod5_to_fastq()
+        # # 1. convert pod5 file to fastq file
+        # # runtime: 5 min.
+        # logger.info("Convert pod5 to fastq...")
+        # convert_pod5_to_fastq()
 
-        # 2. convert fastq file to fasta file
-        # runtime: 5 min.
-        logger.info("Convert fastq to fasta...")
-        convert_fastq_to_fasta()
+        # # 2. convert fastq file to fasta file
+        # # runtime: 5 min.
+        # logger.info("Convert fastq to fasta...")
+        # convert_fastq_to_fasta()
 
-        # 3. create fasta index file
-        # runtime: 3 min.
-        logger.info("Create fasta index file...")
-        create_fasta_index_file()
+        # # 3. create fasta index file
+        # # runtime: 3 min.
+        # logger.info("Create fasta index file...")
+        # create_fasta_index_file()
 
-        # 4. create reference genome index file
-        # runtime: 3 min.
-        logger.info("Create reference genome index file...")
-        create_ref_genome_index_file()
+        # # 4. create reference genome index file
+        # # runtime: 3 min.
+        # logger.info("Create reference genome index file...")
+        # create_ref_genome_index_file()
 
-        # 5. align fasta file to reference genome
-        # runtime: 3 min.
-        logger.info("Align fasta to reference genome...")
-        align_fasta_to_reference()
+        # # 5. align fasta file to reference genome
+        # # runtime: 3 min.
+        # logger.info("Align fasta to reference genome...")
+        # align_fasta_to_reference()
 
-        # 6. sort bam file
-        # runtime: 1 min.
-        logger.info("Sort bam file...")
-        sort_bam_file()
+        # # 6. sort bam file
+        # # runtime: 1 min.
+        # logger.info("Sort bam file...")
+        # sort_bam_file()
 
-        # 7. create sorted bam index file
-        # runtime: 1 min.
-        logger.info("Create sorted bam index file...")
-        create_sorted_bam_index_file()
+        # # 7. create sorted bam index file
+        # # runtime: 1 min.
+        # logger.info("Create sorted bam index file...")
+        # create_sorted_bam_index_file()
 
-        # 7. create bam index file
-        # runtime: 1 min.
-        logger.info("Create bam index file...")
-        create_bam_index_file()
+        # # 7. create bam index file
+        # # runtime: 1 min.
+        # logger.info("Create bam index file...")
+        # create_bam_index_file()
 
-        # 3. perform structural variant calling
+        # 8. perform structural variant calling
         # runtime: 10 min.
         logger.info("Perform structural variant calling...")
         run_sniffles()
