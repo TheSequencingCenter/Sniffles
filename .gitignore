@@ -1,4 +1,7 @@
 # directories
+data/
+dorado_models/
+logs/
 snifflesvenv/
 
 # files
