@@ -11,16 +11,9 @@ For improved calling in repetitive regions, Sniffles2 accepts a tandem repeat an
 (see sniffles --help or below for full usage information).
 
 ## Installation
-You can install Sniffles2 using pip or conda using:
-
-`pip install sniffles`
-
-Note:
-In the file resmon.py, comment out the shebang line.  This python interpreter conflicts with the virtual environment interpreter.
+Install Sniffles2 using pip:
 ```
-cd /home/seqcenter/Sniffles/snifflesvenv/lib/python3.10/site-packages/sniffles/utils
-vi resmon.py
-# #!/usr/bin/env python3
+pip install --no-cache-dir sniffles`
 ```
 
 
