@@ -122,10 +122,11 @@ def convert_pod5_to_bam() -> None:
     """
     command = (
         "dorado basecaller "
-        "-x cpu "
-        f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"{os.environ['POD5_FILE']} > " 
-        f"{os.environ['BAM_FILE']}"
+        "-x cpu "  # device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
+        f"--reference {os.environ['REF_FILE']} "
+        f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
+        f"            {os.environ['POD5_FILE']} > " 
+        f"            {os.environ['BAM_FILE']}"
     )
     run_command(command)
 
@@ -364,66 +365,66 @@ if __name__ == "__main__":
         #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
         #     sys.exit(1)
 
-        # # 1. convert pod5 file to bam file
-        # # runtime: 5 min.
-        # logger.info("Convert pod5 to bam...")
-        # convert_pod5_to_bam()
+        # 1. convert pod5 file to bam file
+        # runtime: 5 min.
+        logger.info("Convert pod5 to bam...")
+        convert_pod5_to_bam()
 
         # # convert fast5 file to bam file
         # # runtime: 5 min.
         # logger.info("Convert fast5 to bam...")
         # convert_fast5_to_bam()
 
-        # 1. convert pod5 file to fastq file
-        try:
-            logger.info("Convert pod5 to fastq...")
-            convert_pod5_to_fastq()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to convert pod5 to fastq: {e}")
+        # # 1. convert pod5 file to fastq file
+        # try:
+        #     logger.info("Convert pod5 to fastq...")
+        #     convert_pod5_to_fastq()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to convert pod5 to fastq: {e}")
 
-        # 2. convert fastq file to fasta file
-        try:
-            logger.info("Convert fastq to fasta...")
-            convert_fastq_to_fasta()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to convert fastq to fasta: {e}")
+        # # 2. convert fastq file to fasta file
+        # try:
+        #     logger.info("Convert fastq to fasta...")
+        #     convert_fastq_to_fasta()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to convert fastq to fasta: {e}")
 
-        # 3. create fasta index file
-        try:
-            logger.info("Create fasta index file...")
-            create_fasta_index_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to create fasta index file: {e}")
+        # # 3. create fasta index file
+        # try:
+        #     logger.info("Create fasta index file...")
+        #     create_fasta_index_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to create fasta index file: {e}")
 
-        # 4. create reference genome index file
-        try:
-            logger.info("Create reference genome index file...")
-            create_ref_genome_index_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to create reference genome index file: {e}")
+        # # 4. create reference genome index file
+        # try:
+        #     logger.info("Create reference genome index file...")
+        #     create_ref_genome_index_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to create reference genome index file: {e}")
 
-        # 5. align fasta file to reference genome
-        try:
-            logger.info("Align fasta to reference genome...")
-            align_fasta_to_reference()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
+        # # 5. align fasta file to reference genome
+        # try:
+        #     logger.info("Align fasta to reference genome...")
+        #     align_fasta_to_reference()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
-        # 6. sort bam file
+        # 2. sort bam file
         try:
             logger.info("Sort bam file...")
             sort_bam_file()
         except Exception as e:
             logger.error(f"ERROR: Failed to sort bam file: {e}")
 
-        # 7. create sorted bam index file
+        # 3. create sorted bam index file
         try:
             logger.info("Create sorted bam index file...")
             create_sorted_bam_index_file()
         except Exception as e:
             logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
 
-        # 8. perform structural variant calling
+        # 4. perform structural variant calling
         try:
             logger.info("Perform structural variant calling...")
             run_sniffles()
