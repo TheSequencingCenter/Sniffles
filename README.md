@@ -27,6 +27,23 @@ pip install --no-cache-dir sniffles`
 * python==3.10.12
 * pysam==0.21.0
 
+<br>
+
+## AWS (Amazon Web Services)  
+EC2  
+PepperPipeline is hosted on AWS EC2 instances that support Nvidia GPU's.  Here are some commonly used instance types.  In all cases the architecture is x86_64.  
+
+| Instance type | # vCPU's | Clock speed (GHz) | Memory (GiB)  | Storage (GB) | Storage type | Network Performance (Gbit/sec.) | GPU name | # GPU's | GPU memory (GiB) | Price (USD/hr.) |  
+| :-----------: | -------: | ----------------: | ------------: | -----------: | -----------: | ------------------------------: | -------: | ------: | ---------------: | --------------: |  
+| g4dn.xlarge   |     4    |      2.5          |       16      |    125       | SSD          | Up to 25                        | T4       | 1       | 16               |  0.71           |  
+|   g5.xlarge   |     4    |      3.3          |       16      |    250       | SSD          | Up to 10                        | A10G     | 1       | 24               |  1.01           |  
+|   g6.xlarge   |     4    |      3.4          |       16      |    250       | SSD          | Up to 10                        | L4       | 1       | 22               |  0.80           |  
+|   p3.2xlarge  |     8    |      2.7          |       61      |    ---       | ---          | Up to 10                        | V100     | 1       | 16               |  3.06           |  
+|  p4d.24xlarge |    96    |      3.0          |    1,152      |  8,000       | SSD          | 4x 100                          | A100     | 8       | 40               | 32.77           |  
+|   p5.48xlarge |   192    |      3.6          |    2,048      | 30,400       | SSD          | 3,200                           | H100     | 8       | 80               | 98.32           |  
+
+<br>
+
 ## Citation
 Please cite our paper at:
 Sniffles v2: 
