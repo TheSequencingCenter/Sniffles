@@ -1,1 +1,2 @@
-nohup python snifflesapp.py > snifflesapp.log 2>&1 &
+nohup python snifflesapp.py --clearfiles > snifflesapp.log 2>&1 &
+#nohup python snifflesapp.py > snifflesapp.log 2>&1 &
