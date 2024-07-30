@@ -125,11 +125,11 @@ def convert_pod5_to_bam() -> None:
     """
     command = (
         "dorado basecaller "
-        "-x cpu "  # device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
-        # "-x cuda:all "
+        # "-x cpu "  # device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
+        "-x cuda:all "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"            {os.environ['POD5_FILES_DIR']} > "  # the original source code takes either a single file name or a directory name
+        f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name
         f"            {os.environ['BAM_FILE']}"
     )
     run_command(command)
@@ -138,17 +138,16 @@ def convert_fast5_to_pod5() -> None:
     """Convert FAST5 file to POD5 file using dorado basecaller.
 
     Parameters:
-       --input_format  : fast5
-       --output_format : pod5
-       --input         : FAST5 directory
-       --output        : POD5 directory
+       -o : POD5 output directory.
+       -t : Number of threads
+       -f : force overwrite existing POD5 files 
     """
     command = (
-        "dorado basecaller "
-        "--input_format fast5 "
-        "--output_format pod5 "
-        f"--input  {os.environ['FAST5_FILES_DIR']} "
-        f"--output {os.environ['POD5_FILES_DIR']}" 
+        "pod5 convert fast5 "
+        f"-o {os.environ['POD5_FILES_DIR']} "
+        f"-t {os.environ['THREADS']} "
+        "-f "
+        f"{os.environ['FAST5_FILES_DIR']}"
     )
     run_command(command)
 
@@ -397,10 +396,10 @@ if __name__ == "__main__":
         # logger.info("Convert fast5 to bam...")
         # convert_fast5_to_bam()
 
-        # 1. convert fast5 file to pod5 file
-        # runtime: 5 min.
-        logger.info("Convert fast5 to pod5...")
-        convert_fast5_to_pod5()
+        # # 1. convert fast5 file to pod5 file
+        # # runtime: 5 min.
+        # logger.info("Convert fast5 to pod5...")
+        # convert_fast5_to_pod5()
 
         # # 1. convert pod5 file to fastq file
         # try:
