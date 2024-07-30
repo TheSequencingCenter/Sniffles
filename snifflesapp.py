@@ -53,9 +53,11 @@ def set_environment_variables() -> None:
     os.environ['OUTPUT_DIR']             = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
 
     # POD5
+    os.environ['POD5_FILES_DIR']         = f"{os.environ['INPUT_DIR']}/POD5_FILES"
     os.environ['POD5_FILE']              = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
 
     # FAST5
+    os.environ['FAST5_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FAST5_FILES"
     os.environ['FAST5_FILE']             = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
     # FASTQ
@@ -123,9 +125,10 @@ def convert_pod5_to_bam() -> None:
     command = (
         "dorado basecaller "
         "-x cpu "  # device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
+        # "-x cuda:all "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"            {os.environ['POD5_FILE']} > " 
+        f"            {os.environ['POD5_FILES_DIR']} > " 
         f"            {os.environ['BAM_FILE']}"
     )
     run_command(command)
