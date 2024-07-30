@@ -45,8 +45,9 @@ def set_environment_variables() -> None:
         sys.exit(1)
 
     # SAMPLE
-    sample_file_name = "test"
+    # sample_file_name = "test"
     # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
+    sample_file_name = "giab_2023_05"
 
     # MAIN DIRS
     os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
@@ -128,8 +129,26 @@ def convert_pod5_to_bam() -> None:
         # "-x cuda:all "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"            {os.environ['POD5_FILES_DIR']} > " 
+        f"            {os.environ['POD5_FILES_DIR']} > "  # the original source code takes either a single file name or a directory name
         f"            {os.environ['BAM_FILE']}"
+    )
+    run_command(command)
+
+def convert_fast5_to_pod5() -> None:
+    """Convert FAST5 file to POD5 file using dorado basecaller.
+
+    Parameters:
+       --input_format  : fast5
+       --output_format : pod5
+       --input         : FAST5 directory
+       --output        : POD5 directory
+    """
+    command = (
+        "dorado basecaller "
+        "--input_format fast5 "
+        "--output_format pod5 "
+        f"--input  {os.environ['FAST5_FILES_DIR']} "
+        f"--output {os.environ['POD5_FILES_DIR']}" 
     )
     run_command(command)
 
@@ -377,6 +396,11 @@ if __name__ == "__main__":
         # # runtime: 5 min.
         # logger.info("Convert fast5 to bam...")
         # convert_fast5_to_bam()
+
+        # 1. convert fast5 file to pod5 file
+        # runtime: 5 min.
+        logger.info("Convert fast5 to pod5...")
+        convert_fast5_to_pod5()
 
         # # 1. convert pod5 file to fastq file
         # try:
