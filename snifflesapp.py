@@ -122,13 +122,15 @@ def convert_pod5_to_bam() -> None:
     
     Parameters:
         -x          : use cpu only or use gpu's. device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
-        --batchsize :  
+        --batchsize : if 0, an optimal batchsize will be selected. batchsizes are rounded to the closest multiple of 64. This may only affect the amount of GPU RAM required to run. [default: 0]
+        -v          : verbose mode
     """
     command = (
         "dorado basecaller "
-        # "-x cpu "       # device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
-        "-x cuda:all "
-        "--batchsize 64 " # if 0, an optimal batchsize will be selected. batchsizes are rounded to the closest multiple of 64. [default: 0]
+        "-x cpu "      
+        # "-x cuda:all "
+        "--batchsize 64 "
+        "-v "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name (confusing)
