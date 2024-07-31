@@ -121,7 +121,7 @@ def convert_pod5_to_bam() -> None:
     """Convert POD5 file to BAM file using dorado basecaller.
     
     Parameters:
-        -x : cpu only
+        -x : use cpu only or use gpu's. device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
     """
     command = (
         "dorado basecaller "
@@ -129,7 +129,7 @@ def convert_pod5_to_bam() -> None:
         "-x cuda:all "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name
+        f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name (confusing)
         f"            {os.environ['BAM_FILE']}"
     )
     run_command(command)
