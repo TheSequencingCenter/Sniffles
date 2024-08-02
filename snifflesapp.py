@@ -129,8 +129,8 @@ def convert_pod5_to_bam() -> None:
         "dorado basecaller "
         "-x cpu "      
         # "-x cuda:all "
-        "--batchsize 64 "
-        "-v "
+        # "--batchsize 64 "
+        # "-v "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name (confusing)
