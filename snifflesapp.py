@@ -44,10 +44,10 @@ def set_environment_variables() -> None:
         logger.error(f"Error: an unexpected error occured{e}")
         sys.exit(1)
 
-    # SAMPLE
+    # SAMPLES
     # sample_file_name = "test"
     # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
-    sample_file_name = "giab_2023_05"
+    # sample_file_name = "giab_2023_05"
 
     # MAIN DIRS
     os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
@@ -116,6 +116,19 @@ def get_output_file(environment, input_file):
         if mapping["input"] == input_file:
             return mapping["output"]
     return None
+
+def copy_sample_files_S3_to_EC2() -> None:
+    """Copy sample files from S3 to EC2.
+    
+    Parameters:
+        --recursive : Copy all files recursively.
+    """
+    command = (
+        "aws s3 cp s3://seqcenter-samples/samples/ "
+        f"{os.environ['POD5_FILES_DIR']} "
+        "--recursive"
+    )
+    run_command(command)
 
 def convert_pod5_to_bam() -> None:
     """Convert POD5 file to BAM file using dorado basecaller.
@@ -359,12 +372,19 @@ if __name__ == "__main__":
         # output_file = get_output_file("production", "data/input/production/input3.txt")
         # print(f"Output file for 'data/input/production/input3.txt': {output_file}")
 
-        # 1. convert pod5 file to bam file
+        # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
-            logger.info("Convert pod5 to bam...")
-            convert_pod5_to_bam()
+            logger.info("Copy sample files from S3 to EC2...")
+            copy_sample_files_S3_to_EC2()
         except Exception as e:
-            logger.error(f"ERROR: Failed to convert pod5 to bam: {e}")
+            logger.error(f"ERROR: Failed to copy files from S3 to EC2: {e}")
+
+        # # 1. convert pod5 file to bam file
+        # try:
+        #     logger.info("Convert pod5 to bam...")
+        #     convert_pod5_to_bam()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to convert pod5 to bam: {e}")
 
         # convert fast5 file to bam file
         # try:
@@ -415,26 +435,26 @@ if __name__ == "__main__":
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
-        # 2. sort bam file
-        try:
-            logger.info("Sort bam file...")
-            sort_bam_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to sort bam file: {e}")
+        # # 2. sort bam file
+        # try:
+        #     logger.info("Sort bam file...")
+        #     sort_bam_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to sort bam file: {e}")
 
-        # 3. create sorted bam index file
-        try:
-            logger.info("Create sorted bam index file...")
-            create_sorted_bam_index_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
+        # # 3. create sorted bam index file
+        # try:
+        #     logger.info("Create sorted bam index file...")
+        #     create_sorted_bam_index_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
 
-        # 4. perform structural variant calling
-        try:
-            logger.info("Perform structural variant calling...")
-            run_sniffles()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
+        # # 4. perform structural variant calling
+        # try:
+        #     logger.info("Perform structural variant calling...")
+        #     run_sniffles()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
 
         logger.info("Finish Sniffles...")
 
