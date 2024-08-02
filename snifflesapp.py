@@ -129,8 +129,8 @@ def convert_pod5_to_bam() -> None:
         "dorado basecaller "
         "-x cpu "      
         # "-x cuda:all "
-        "--batchsize 64 "
-        "-v "
+        # "--batchsize 64 "
+        # "-v "
         f"--reference {os.environ['REF_FILE']} "
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name (confusing)
@@ -344,7 +344,7 @@ if __name__ == "__main__":
         logger.info("Set environment variables...")
         set_environment_variables()
 
-        # delete all files in subdirectories if --clearfiles is specified
+        # delete all files in subdirectories if --clearfiles is specified. Use with caution.
         if args.clearfiles:
             logger.info("Clear files...")
             clear_files()
@@ -359,107 +359,82 @@ if __name__ == "__main__":
         # output_file = get_output_file("production", "data/input/production/input3.txt")
         # print(f"Output file for 'data/input/production/input3.txt': {output_file}")
 
-        # # TODO: replace with real datasets
-        # # download alignment files
-        # logger.info("Download alignment files...")
+        # 1. convert pod5 file to bam file
+        try:
+            logger.info("Convert pod5 to bam...")
+            convert_pod5_to_bam()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to convert pod5 to bam: {e}")
+
+        # convert fast5 file to bam file
         # try:
-        #     wget.download("https://storage.googleapis.com/pepper-deepvariant-public/pepper_deepvariant_training/HG002_guppy422_2_GRCh38_no_alt.bam",     out=os.environ['BAM_FILES_DIR'])
-        #     wget.download("https://storage.googleapis.com/pepper-deepvariant-public/pepper_deepvariant_training/HG002_guppy422_2_GRCh38_no_alt.bam.bai", out=os.environ['BAM_FILES_DIR'])
+        #     logger.info("Convert fast5 to bam...")
+        #     convert_fast5_to_bam()
         # except Exception as e:
-        #     logger.error(f"ERROR: an error occurred while downloading alignment files: {e}")
-        #     sys.exit(1)
+        #     logger.error(f"ERROR: Failed to convert fast5 to bam: {e}")
 
-        # # TODO: replace with real datasets
-        # # download reference files
-        # logger.info("Download reference files...")
+        # convert fast5 file to pod5 file
         # try:
-        #     wget.download("https://storage.googleapis.com/kishwar-helen/variant_calling_data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",     out=os.environ['REF_FILES_DIR'])
-        #     wget.download("https://storage.googleapis.com/kishwar-helen/variant_calling_data/ref/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai", out=os.environ['REF_FILES_DIR'])
+        #     logger.info("Convert fast5 to pod5...")
+        #     convert_fast5_to_pod5()
         # except Exception as e:
-        #     logger.error(f"ERROR: an error occurred while downloading reference files: {e}")
-        #     sys.exit(1)
+        #     logger.error(f"ERROR: Failed to convert fast5 to pod5: {e}")
 
-        # # TODO: replace with real datasets
-        # # download GIAB truth files
-        # logger.info("Download GIAB truth files...")
-        # try:
-        #     wget.download("https://storage.googleapis.com/pepper-deepvariant-public/pepper_deepvariant_training/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz",     out=os.environ['TRUTH_VCF_FILES_DIR'])
-        #     wget.download("https://storage.googleapis.com/pepper-deepvariant-public/pepper_deepvariant_training/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz.tbi", out=os.environ['TRUTH_VCF_FILES_DIR'])
-        #     wget.download("https://storage.googleapis.com/pepper-deepvariant-public/pepper_deepvariant_training/HG002_GRCh38_1_22_v4.2.1_benchmark.bed",        out=os.environ['TRUTH_BED_FILES_DIR'])
-        # except Exception as e:
-        #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
-        #     sys.exit(1)
-
-        # # 1. convert pod5 file to bam file
-        # # runtime: 5 min.
-        # logger.info("Convert pod5 to bam...")
-        # convert_pod5_to_bam()
-
-        # # convert fast5 file to bam file
-        # # runtime: 5 min.
-        # logger.info("Convert fast5 to bam...")
-        # convert_fast5_to_bam()
-
-        # # 1. convert fast5 file to pod5 file
-        # # runtime: 5 min.
-        # logger.info("Convert fast5 to pod5...")
-        # convert_fast5_to_pod5()
-
-        # # 1. convert pod5 file to fastq file
+        # convert pod5 file to fastq file
         # try:
         #     logger.info("Convert pod5 to fastq...")
         #     convert_pod5_to_fastq()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to convert pod5 to fastq: {e}")
 
-        # # 2. convert fastq file to fasta file
+        # convert fastq file to fasta file
         # try:
         #     logger.info("Convert fastq to fasta...")
         #     convert_fastq_to_fasta()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to convert fastq to fasta: {e}")
 
-        # # 3. create fasta index file
+        # create fasta index file
         # try:
         #     logger.info("Create fasta index file...")
         #     create_fasta_index_file()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to create fasta index file: {e}")
 
-        # # 4. create reference genome index file
+        # create reference genome index file
         # try:
         #     logger.info("Create reference genome index file...")
         #     create_ref_genome_index_file()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to create reference genome index file: {e}")
 
-        # # 5. align fasta file to reference genome
+        # align fasta file to reference genome
         # try:
         #     logger.info("Align fasta to reference genome...")
         #     align_fasta_to_reference()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
-        # # 2. sort bam file
-        # try:
-        #     logger.info("Sort bam file...")
-        #     sort_bam_file()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to sort bam file: {e}")
+        # 2. sort bam file
+        try:
+            logger.info("Sort bam file...")
+            sort_bam_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to sort bam file: {e}")
 
-        # # 3. create sorted bam index file
-        # try:
-        #     logger.info("Create sorted bam index file...")
-        #     create_sorted_bam_index_file()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
+        # 3. create sorted bam index file
+        try:
+            logger.info("Create sorted bam index file...")
+            create_sorted_bam_index_file()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
 
-        # # 4. perform structural variant calling
-        # try:
-        #     logger.info("Perform structural variant calling...")
-        #     run_sniffles()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
+        # 4. perform structural variant calling
+        try:
+            logger.info("Perform structural variant calling...")
+            run_sniffles()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
 
         logger.info("Finish Sniffles...")
 
