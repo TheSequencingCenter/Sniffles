@@ -338,7 +338,7 @@ if __name__ == "__main__":
     args   = parser.parse_args()
 
     try:
-        logger.info("Start PepperPipeline...")
+        logger.info("Start Sniffles...")
 
         # set env vars
         logger.info("Set environment variables...")
@@ -390,10 +390,10 @@ if __name__ == "__main__":
         #     logger.error(f"ERROR: an error occurred while downloading GIAB truth files: {e}")
         #     sys.exit(1)
 
-        # 1. convert pod5 file to bam file
-        # runtime: 5 min.
-        logger.info("Convert pod5 to bam...")
-        convert_pod5_to_bam()
+        # # 1. convert pod5 file to bam file
+        # # runtime: 5 min.
+        # logger.info("Convert pod5 to bam...")
+        # convert_pod5_to_bam()
 
         # # convert fast5 file to bam file
         # # runtime: 5 min.
@@ -440,28 +440,28 @@ if __name__ == "__main__":
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
-        # 2. sort bam file
-        try:
-            logger.info("Sort bam file...")
-            sort_bam_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to sort bam file: {e}")
+        # # 2. sort bam file
+        # try:
+        #     logger.info("Sort bam file...")
+        #     sort_bam_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to sort bam file: {e}")
 
-        # 3. create sorted bam index file
-        try:
-            logger.info("Create sorted bam index file...")
-            create_sorted_bam_index_file()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
+        # # 3. create sorted bam index file
+        # try:
+        #     logger.info("Create sorted bam index file...")
+        #     create_sorted_bam_index_file()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to create sorted bam index file: {e}")
 
-        # 4. perform structural variant calling
-        try:
-            logger.info("Perform structural variant calling...")
-            run_sniffles()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
+        # # 4. perform structural variant calling
+        # try:
+        #     logger.info("Perform structural variant calling...")
+        #     run_sniffles()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
 
-        logger.info("Finish PepperPipeline...")
+        logger.info("Finish Sniffles...")
 
     except Exception as e:
         logger.error(f"ERROR: an error occurred in main: {e}")
