@@ -372,12 +372,12 @@ if __name__ == "__main__":
         # output_file = get_output_file("production", "data/input/production/input3.txt")
         # print(f"Output file for 'data/input/production/input3.txt': {output_file}")
 
-        # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
-        try:
-            logger.info("Copy sample files from S3 to EC2...")
-            copy_sample_files_S3_to_EC2()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to copy files from S3 to EC2: {e}")
+        # # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
+        # try:
+        #     logger.info("Copy sample files from S3 to EC2...")
+        #     copy_sample_files_S3_to_EC2()
+        # except Exception as e:
+        #     logger.error(f"ERROR: Failed to copy files from S3 to EC2: {e}")
 
         # # 1. convert pod5 file to bam file
         # try:
