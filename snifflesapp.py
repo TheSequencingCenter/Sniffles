@@ -86,35 +86,6 @@ def set_environment_variables() -> None:
     # THREADS
     os.environ['THREADS']                = '14'
 
-def load_mappings(environment):
-    """Manage input-output files. Load the mappings for the specified environment from the JSON file."""
-    mappings_file = f"data/io-mappings/{environment}_io_mappings.json"
-    if os.path.exists(mappings_file):
-        with open(mappings_file, 'r') as file:
-            return json.load(file)
-    else:
-        return {"io-mappings": []}
-
-def save_mappings(environment, mappings):
-    """Manage input-output files. Save the updated mappings to the JSON file for the specified environment."""
-    mappings_file = f"data/io-mappings/{environment}_io_mappings.json"
-    with open(mappings_file, 'w') as file:
-        json.dump(mappings, file, indent=4)
-
-def add_mapping(environment, input_file, output_file):
-    """Manage input-output files. Add a new mapping of input and output files for the specified environment."""
-    mappings = load_mappings(environment)
-    mappings["io-mappings"].append({"input": input_file, "output": output_file})
-    save_mappings(environment, mappings)
-
-def get_output_file(environment, input_file):
-    """Manage input-output files. Retrieve the output file corresponding to the given input file for the specified environment."""
-    mappings = load_mappings(environment)
-    for mapping in mappings["io-mappings"]:
-        if mapping["input"] == input_file:
-            return mapping["output"]
-    return None
-
 def copy_sample_files_S3_to_EC2() -> None:
     """Copy sample files from S3 to EC2.
     
@@ -191,107 +162,6 @@ def convert_fast5_to_bam() -> None:
     )
     run_command(command)
 
-def convert_pod5_to_fastq() -> None:
-    """Convert POD5 file to FASTQ file using dorado basecaller.
-
-    Parameters:
-        -x : cpu only
-        --emit-fastq
-    """
-
-    # delete existing fastq files
-    fastq_file_dir = os.environ.get('FASTQ_FILES_DIR')
-
-    if fastq_file_dir:
-        for filename in os.listdir(fastq_file_dir):
-            file_path = os.path.join(fastq_file_dir, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-
-    command = (
-        "dorado basecaller "
-        "-x cpu "
-        "--emit-fastq "
-        f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"{os.environ['POD5_FILE']} > " 
-        f"{os.environ['FASTQ_FILE']}"
-    )
-    run_command(command)
-
-def convert_fastq_to_fasta() -> None:
-    """Convert FASTQ file to FASTA file"""
-
-    # delete existing fasta files
-    fasta_file_dir = os.environ.get('FASTA_FILES_DIR')
-
-    if fasta_file_dir:
-        for filename in os.listdir(fasta_file_dir):
-            file_path = os.path.join(fasta_file_dir, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-
-    command = (
-        "seqtk seq "
-        f"-a {os.environ['FASTQ_FILE']} > " 
-        f"   {os.environ['FASTA_FILE']}"
-    )
-    run_command(command)
-
-def create_fasta_index_file() -> None:
-    """Create FASTA index file."""
-    command = (
-        "samtools faidx "
-        f"{os.environ['FASTA_FILE']}"
-    )
-    run_command(command)
-
-def create_ref_genome_index_file() -> None:
-    """Create reference genome index file.
-    Reference genome file must be compressed with bgzip, not gzip."""
-
-    # delete existing ref genome index files with suffix .fai and .gzi
-    ref_files_dir = os.environ.get('REF_FILES_DIR')
-
-    if ref_files_dir:
-        for filename in os.listdir(ref_files_dir):
-            if filename.endswith('.fai') or filename.endswith('.gzi'):
-                file_path = os.path.join(ref_files_dir, filename)
-                if os.path.isfile(file_path) or os.path.islink(file_path):
-                    os.unlink(file_path)
-
-    command = (
-        "samtools faidx "
-        f"{os.environ['REF_FILE']}"
-    )
-    run_command(command)
-
-def align_fasta_to_reference() -> None:
-    """Align FASTA file to reference genome using dorado basecaller."""
-
-    # delete existing bam files
-    bam_files_dir = os.environ.get('BAM_FILES_DIR')
-
-    if bam_files_dir:
-        for filename in os.listdir(bam_files_dir):
-            file_path = os.path.join(bam_files_dir, filename)
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-
-    command = (
-        "dorado aligner "
-        f"-t {os.environ['THREADS']} "
-        f"   {os.environ['REF_FILE']} "
-        f"   {os.environ['FASTA_FILE']} > "
-        f"   {os.environ['BAM_FILE']}" 
-    )
-    run_command(command)
-
 def create_bam_index_file() -> None:
     """Create bam index file."""
     command = (
@@ -360,16 +230,6 @@ if __name__ == "__main__":
             logger.info("Clear files...")
             clear_files()
 
-        # # Add new mappings
-        # add_mapping("test",       "data/input/test/input3.txt",       "data/output/test/output3.txt")
-        # add_mapping("production", "data/input/production/input3.txt", "data/output/production/output3.txt")
-        
-        # # Get output file for a given input file
-        # output_file = get_output_file("test", "data/input/test/{sample_file_name}.pod5")
-        # print(f"Output file for 'data/output/test/{sample_file_name}.pod5': {output_file}")
-        # output_file = get_output_file("production", "data/input/production/input3.txt")
-        # print(f"Output file for 'data/input/production/input3.txt': {output_file}")
-
         # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
             logger.info("Copy sample files from S3 to EC2...")
@@ -397,41 +257,6 @@ if __name__ == "__main__":
         #     convert_fast5_to_pod5()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to convert fast5 to pod5: {e}")
-
-        # convert pod5 file to fastq file
-        # try:
-        #     logger.info("Convert pod5 to fastq...")
-        #     convert_pod5_to_fastq()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to convert pod5 to fastq: {e}")
-
-        # convert fastq file to fasta file
-        # try:
-        #     logger.info("Convert fastq to fasta...")
-        #     convert_fastq_to_fasta()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to convert fastq to fasta: {e}")
-
-        # create fasta index file
-        # try:
-        #     logger.info("Create fasta index file...")
-        #     create_fasta_index_file()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to create fasta index file: {e}")
-
-        # create reference genome index file
-        # try:
-        #     logger.info("Create reference genome index file...")
-        #     create_ref_genome_index_file()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to create reference genome index file: {e}")
-
-        # align fasta file to reference genome
-        # try:
-        #     logger.info("Align fasta to reference genome...")
-        #     align_fasta_to_reference()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to align fasta to reference genome: {e}")
 
         # 3. sort bam file
         try:
