@@ -47,7 +47,7 @@ def set_environment_variables() -> None:
     # SAMPLES
     # sample_file_name = "test"
     # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
-    # sample_file_name = "giab_2023_05"
+    sample_file_name = "giab_2023_05"
 
     # MAIN DIRS
     os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
