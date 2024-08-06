@@ -4,9 +4,7 @@
 
 # Standard library imports
 import argparse
-import json
 import os
-import shutil
 import subprocess
 import sys
 
@@ -99,6 +97,23 @@ def copy_sample_files_S3_to_EC2() -> None:
     )
     run_command(command)
 
+def convert_fast5_to_pod5() -> None:
+    """Convert FAST5 file to POD5 file using dorado basecaller.
+
+    Parameters:
+       -o : POD5 output directory.
+       -t : Number of threads
+       -f : force overwrite existing POD5 files 
+    """
+    command = (
+        "pod5 convert fast5 "
+        f"-o {os.environ['POD5_FILES_DIR']} "
+        f"-t {os.environ['THREADS']} "
+        "-f "
+        f"{os.environ['FAST5_FILES_DIR']}"
+    )
+    run_command(command)
+
 def convert_pod5_to_bam() -> None:
     """Convert POD5 file to BAM file using dorado basecaller.
     
@@ -117,48 +132,6 @@ def convert_pod5_to_bam() -> None:
         f"            {os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
         f"            {os.environ['POD5_FILES_DIR']} > "  # this parameter is either a single file name or a directory name (confusing)
         f"            {os.environ['BAM_FILE']}"
-    )
-    run_command(command)
-
-def convert_fast5_to_pod5() -> None:
-    """Convert FAST5 file to POD5 file using dorado basecaller.
-
-    Parameters:
-       -o : POD5 output directory.
-       -t : Number of threads
-       -f : force overwrite existing POD5 files 
-    """
-    command = (
-        "pod5 convert fast5 "
-        f"-o {os.environ['POD5_FILES_DIR']} "
-        f"-t {os.environ['THREADS']} "
-        "-f "
-        f"{os.environ['FAST5_FILES_DIR']}"
-    )
-    run_command(command)
-
-def convert_fast5_to_bam() -> None:
-    """Convert FAST5 file to BAM file using dorado basecaller.
-
-    Parameters:time docker run \
-    -v $(pwd):/data \
-    pepper_deepvariant \
-    margin phase \
-    /data/HG002_guppy422_2_GRCh38_no_alt.bam \
-    /data/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz \
-    /data/PEPPER_VARIANT_FULL.vcf.gz \
-    /opt/margin_dir/params/phase/allParams.phase_vcf.ont.json \
-    -o /data/margin_output/HG002_guppy422_2_GRCh38_no_alt \
-    -t 14
-
-        -x : cpu only
-    """
-    command = (
-        "dorado basecaller "
-        "-x cpu "
-        f"{os.environ['DORADO_MODELS']}/dna_r10.4.1_e8.2_400bps_fast@v4.2.0 "
-        f"{os.environ['FAST5_FILE']} > " 
-        f"{os.environ['BAM_FILE']}"
     )
     run_command(command)
 
@@ -237,26 +210,19 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(f"ERROR: Failed to copy files from S3 to EC2: {e}")
 
-        # 2. convert pod5 file to bam file
-        try:
-            logger.info("Convert pod5 to bam...")
-            convert_pod5_to_bam()
-        except Exception as e:
-            logger.error(f"ERROR: Failed to convert pod5 to bam: {e}")
-
-        # convert fast5 file to bam file
-        # try:
-        #     logger.info("Convert fast5 to bam...")
-        #     convert_fast5_to_bam()
-        # except Exception as e:
-        #     logger.error(f"ERROR: Failed to convert fast5 to bam: {e}")
-
         # convert fast5 file to pod5 file
         # try:
         #     logger.info("Convert fast5 to pod5...")
         #     convert_fast5_to_pod5()
         # except Exception as e:
         #     logger.error(f"ERROR: Failed to convert fast5 to pod5: {e}")
+
+        # 2. convert pod5 file to bam file
+        try:
+            logger.info("Convert pod5 to bam...")
+            convert_pod5_to_bam()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to convert pod5 to bam: {e}")
 
         # 3. sort bam file
         try:
