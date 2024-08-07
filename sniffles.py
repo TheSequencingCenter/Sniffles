@@ -45,43 +45,35 @@ def set_environment_variables() -> None:
     sample_file_name = "giab_2023_05"
 
     # MAIN DIRS
-    os.environ['INPUT_DIR']              = f"{os.environ['BASE_DIR']}/data/INPUTS"
-    os.environ['OUTPUT_DIR']             = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
+    os.environ['INPUT_DIR']          = f"{os.environ['BASE_DIR']}/data/INPUTS"
+    os.environ['OUTPUT_DIR']         = f"{os.environ['BASE_DIR']}/data/OUTPUTS"
 
     # POD5
-    os.environ['POD5_FILES_DIR']         = f"{os.environ['INPUT_DIR']}/POD5_FILES"
-    os.environ['POD5_FILE']              = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
+    os.environ['POD5_FILES_DIR']     = f"{os.environ['INPUT_DIR']}/POD5_FILES"
+    os.environ['POD5_FILE']          = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
 
     # FAST5
-    os.environ['FAST5_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FAST5_FILES"
-    os.environ['FAST5_FILE']             = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
-
-    # FASTQ
-    os.environ['FASTQ_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTQ_FILES"
-    os.environ['FASTQ_FILE']             = f"{os.environ['INPUT_DIR']}/FASTQ_FILES/{sample_file_name}.fastq"
-
-    # FASTA
-    os.environ['FASTA_FILES_DIR']        = f"{os.environ['INPUT_DIR']}/FASTA_FILES"
-    os.environ['FASTA_FILE']             = f"{os.environ['INPUT_DIR']}/FASTA_FILES/{sample_file_name}.fasta"
+    os.environ['FAST5_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/FAST5_FILES"
+    os.environ['FAST5_FILE']         = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
     # # BAM
-    os.environ['BAM_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/BAM_FILES"
-    os.environ['BAM_FILE']               = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
-    os.environ['BAM_SORTED_FILE']        = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
+    os.environ['BAM_FILES_DIR']      = f"{os.environ['INPUT_DIR']}/BAM_FILES"
+    os.environ['BAM_FILE']           = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
+    os.environ['BAM_SORTED_FILE']    = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
 
     # REFERENCE 
-    os.environ['REF_FILES_DIR']          = f"{os.environ['INPUT_DIR']}/REF_FILES"
-    os.environ['REF_FILE']               = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
+    os.environ['REF_FILES_DIR']      = f"{os.environ['INPUT_DIR']}/REF_FILES"
+    os.environ['REF_FILE']           = f"{os.environ['INPUT_DIR']}/REF_FILES/GCA_000001405.15_GRCh38_no_alt_analysis_set.fa.gz"
 
     # # MODELS
-    os.environ['DORADO_MODELS']          = f"{os.environ['BASE_DIR']}/dorado_models"
+    os.environ['DORADO_MODELS']      = f"{os.environ['BASE_DIR']}/dorado_models"
 
     # SNIFFLES
-    os.environ['SNIFFLES_FILES_DIR']    = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    os.environ['SNIFFLES_VCF_FILE']      = f"{os.environ['SNIFFLES_FILES_DIR']}/sniffles.vcf.gz"
+    os.environ['SNIFFLES_FILES_DIR'] = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
+    os.environ['SNIFFLES_VCF_FILE']  = f"{os.environ['SNIFFLES_FILES_DIR']}/sniffles.vcf.gz"
 
     # THREADS
-    os.environ['THREADS']                = '14'
+    os.environ['THREADS']            = '14'
 
 def clear_all_files() -> None:
     """Clear all files in the specified directories."""
