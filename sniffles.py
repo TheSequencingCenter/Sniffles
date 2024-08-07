@@ -1,6 +1,7 @@
 # Author:  Richard Casey
 # Date:    07-24-2024 (DD-MM-YYYY)
 # Purpose: Human genome structural variant caller.
+# Notes:   In production mode, this application requires Nvidia GPU's (H100, A100, V100).
 
 # Standard library imports
 import argparse
@@ -108,6 +109,7 @@ def convert_fast5_to_pod5() -> None:
 
 def convert_pod5_to_bam() -> None:
     """Convert POD5 file to BAM file using dorado basecaller.
+    Note: In production mode, set "-x" to "cuda:all" so it uses Nvidia GPU's (H100, A100, V100).
     
     Parameters:
         -x          : use cpu only or use gpu's. device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
