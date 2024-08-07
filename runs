@@ -1,2 +1,1 @@
-nohup time python snifflesapp.py --clearfiles > snifflesapp.log 2>&1 &
-#nohup time python snifflesapp.py > snifflesapp.log 2>&1 &
+nohup time python sniffles.py > sniffles.log 2>&1 &

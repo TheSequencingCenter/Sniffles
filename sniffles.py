@@ -3,7 +3,6 @@
 # Purpose: Human genome structural variant caller.
 
 # Standard library imports
-import argparse
 import os
 import subprocess
 import sys
@@ -83,6 +82,11 @@ def set_environment_variables() -> None:
 
     # THREADS
     os.environ['THREADS']                = '14'
+
+def clear_all_files() -> None:
+    """Clear all files in the specified directories."""
+    logger.info("Clear files...")
+    clear_files()
 
 def copy_sample_files_S3_to_EC2() -> None:
     """Copy sample files from S3 to EC2.
@@ -186,22 +190,22 @@ def run_sniffles() -> None:
 # main entry point
 if __name__ == "__main__":
 
-    # clear files before starting application
-    parser = argparse.ArgumentParser(description="Human genome structural variant caller.")
-    parser.add_argument("--clearfiles", action="store_true", help="Clear files before starting application.")
-    args   = parser.parse_args()
-
     try:
         logger.info("Start Sniffles...")
 
         # set env vars
-        logger.info("Set environment variables...")
-        set_environment_variables()
+        try:
+            logger.info("Set environment variables...")
+            set_environment_variables()
+        except Exception as e:
+            logger.error(f"ERROR: Could not set environment variables {e}")
 
-        # delete all files in subdirectories if --clearfiles is specified. Use with caution.
-        if args.clearfiles:
+        # delete all files in subdirectories to set initial state for application
+        try:
             logger.info("Clear files...")
             clear_files()
+        except Exception as e:
+            logger.error(f"ERROR: Failed to clear files: {e}")
 
         # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
