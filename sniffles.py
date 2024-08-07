@@ -3,6 +3,7 @@
 # Purpose: Human genome structural variant caller.
 
 # Standard library imports
+import argparse
 import os
 import subprocess
 import sys
@@ -23,7 +24,7 @@ def run_command(command: str) -> None:
         logger.error(f"STDERR: {e.stderr}")
         sys.exit(1)
 
-def set_environment_variables() -> None:
+def set_environment_variables(sample_file_name: str) -> None:
     """Set environment variables."""
     try:
         # check which server is hosting the code 
@@ -38,11 +39,6 @@ def set_environment_variables() -> None:
     except ValueError as e:
         logger.error(f"Error: an unexpected error occured{e}")
         sys.exit(1)
-
-    # SAMPLES
-    # sample_file_name = "test"
-    # sample_file_name = "HG002_guppy422_2_GRCh38_no_alt"
-    sample_file_name = "giab_2023_05"
 
     # MAIN DIRS
     os.environ['INPUT_DIR']          = f"{os.environ['BASE_DIR']}/data/INPUTS"
@@ -183,12 +179,17 @@ def run_sniffles() -> None:
 if __name__ == "__main__":
 
     try:
+        # set sample name
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--samplename", required=True, help="Enter a sample name for this run.")
+        args = parser.parse_args()
+            
         logger.info("Start Sniffles...")
 
         # set env vars
         try:
             logger.info("Set environment variables...")
-            set_environment_variables()
+            set_environment_variables(args.samplename)
         except Exception as e:
             logger.error(f"ERROR: Could not set environment variables {e}")
 
