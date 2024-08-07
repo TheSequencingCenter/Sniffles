@@ -50,11 +50,11 @@ def set_environment_variables() -> None:
 
     # POD5
     os.environ['POD5_FILES_DIR']     = f"{os.environ['INPUT_DIR']}/POD5_FILES"
-    os.environ['POD5_FILE']          = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
+    # os.environ['POD5_FILE']          = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
 
     # FAST5
     os.environ['FAST5_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/FAST5_FILES"
-    os.environ['FAST5_FILE']         = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
+    # os.environ['FAST5_FILE']         = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
     # # BAM
     os.environ['BAM_FILES_DIR']      = f"{os.environ['INPUT_DIR']}/BAM_FILES"
@@ -94,7 +94,7 @@ def copy_sample_files_S3_to_EC2() -> None:
     run_command(command)
 
 def convert_fast5_to_pod5() -> None:
-    """Convert FAST5 file to POD5 file using dorado basecaller.
+    """Convert FAST5 file to POD5 file.
 
     Parameters:
        -o : POD5 output directory.
@@ -201,10 +201,10 @@ if __name__ == "__main__":
 
         # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
-            logger.info("Copy sample files from S3 to EC2...")
+            logger.info("Copy sample POD5 files from S3 to EC2...")
             copy_sample_files_S3_to_EC2()
         except Exception as e:
-            logger.error(f"ERROR: Failed to copy files from S3 to EC2: {e}")
+            logger.error(f"ERROR: Failed to copy sample POD5 files from S3 to EC2: {e}")
 
         # convert fast5 file to pod5 file
         # try:
