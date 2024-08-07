@@ -116,7 +116,7 @@ def convert_pod5_to_bam() -> None:
     Parameters:
         -x          : use cpu only or use gpu's. device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
         --batchsize : if 0, an optimal batchsize will be selected. batchsizes are rounded to the closest multiple of 64. This may only affect the amount of GPU RAM required to run. [default: 0]
-        -v          : verbose mode
+        -v          : verbose mode 
     """
     command = (
         "dorado basecaller "
