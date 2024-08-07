@@ -1,6 +1,7 @@
 # Author:  Richard Casey
 # Date:    07-24-2024 (DD-MM-YYYY)
 # Purpose: Human genome structural variant caller.
+# Notes:   In production mode, this application requires Nvidia GPU's (H100, A100, V100).
 
 # Standard library imports
 import argparse
@@ -24,7 +25,7 @@ def run_command(command: str) -> None:
         logger.error(f"STDERR: {e.stderr}")
         sys.exit(1)
 
-def set_environment_variables(sample_file_name: str) -> None:
+def set_environment_variables(sample_name: str) -> None:
     """Set environment variables."""
     try:
         # check which server is hosting the code 
@@ -46,16 +47,14 @@ def set_environment_variables(sample_file_name: str) -> None:
 
     # POD5
     os.environ['POD5_FILES_DIR']     = f"{os.environ['INPUT_DIR']}/POD5_FILES"
-    # os.environ['POD5_FILE']          = f"{os.environ['INPUT_DIR']}/POD5_FILES/{sample_file_name}.pod5"
 
     # FAST5
     os.environ['FAST5_FILES_DIR']    = f"{os.environ['INPUT_DIR']}/FAST5_FILES"
-    # os.environ['FAST5_FILE']         = f"{os.environ['INPUT_DIR']}/FAST5_FILES/{sample_file_name}.fast5"
 
     # # BAM
     os.environ['BAM_FILES_DIR']      = f"{os.environ['INPUT_DIR']}/BAM_FILES"
-    os.environ['BAM_FILE']           = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.bam"
-    os.environ['BAM_SORTED_FILE']    = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_file_name}.sorted.bam"
+    os.environ['BAM_FILE']           = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_name}.bam"
+    os.environ['BAM_SORTED_FILE']    = f"{os.environ['INPUT_DIR']}/BAM_FILES/{sample_name}.sorted.bam"
 
     # REFERENCE 
     os.environ['REF_FILES_DIR']      = f"{os.environ['INPUT_DIR']}/REF_FILES"
@@ -76,14 +75,14 @@ def clear_all_files() -> None:
     logger.info("Clear files...")
     clear_files()
 
-def copy_sample_files_S3_to_EC2() -> None:
+def copy_sample_files_S3_to_EC2(sample_name: str) -> None:
     """Copy sample files from S3 to EC2.
     
     Parameters:
         --recursive : Copy all files recursively.
     """
     command = (
-        "aws s3 cp s3://seqcenter-samples/samples/ "
+        "aws s3 cp s3://seqcenter-samples/{sample_name}/ "
         f"{os.environ['POD5_FILES_DIR']} "
         "--recursive"
     )
@@ -108,6 +107,7 @@ def convert_fast5_to_pod5() -> None:
 
 def convert_pod5_to_bam() -> None:
     """Convert POD5 file to BAM file using dorado basecaller.
+    Note: In production mode, set "-x" to "cuda:all" so it uses Nvidia GPU's (H100, A100, V100).
     
     Parameters:
         -x          : use cpu only or use gpu's. device string in format "cuda:0,...,N", "cuda:all", "metal", "cpu" etc.. [default: "cuda:all"]
@@ -203,7 +203,7 @@ if __name__ == "__main__":
         # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
             logger.info("Copy sample POD5 files from S3 to EC2...")
-            copy_sample_files_S3_to_EC2()
+            copy_sample_files_S3_to_EC2(args.samplename)
         except Exception as e:
             logger.error(f"ERROR: Failed to copy sample POD5 files from S3 to EC2: {e}")
 
