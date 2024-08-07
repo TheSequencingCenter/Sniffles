@@ -1,0 +1,4 @@
+# create sniffles package
+cd /home/seqcenter/Sniffles
+pip install -r requirements.txt
+pyinstaller --onefile sniffles.py
