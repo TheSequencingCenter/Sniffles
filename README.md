@@ -23,6 +23,8 @@ pip install --no-cache-dir sniffles`
 * edlib >=1.3.9
 * psutil>=5.9.4
 
+Notes:   In production mode, this application requires Nvidia GPU's (H100, A100, V100).
+
 #### Tested on:
 * python==3.10.12
 * pysam==0.21.0
