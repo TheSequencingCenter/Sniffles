@@ -13,6 +13,6 @@ __pycache__
 .rsync-ignore
 .idea/
 .idea/*
-snifflesapp.log
+sniffles.log
 .github/
 .github/*
