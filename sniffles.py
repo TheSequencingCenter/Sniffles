@@ -232,7 +232,7 @@ if __name__ == "__main__":
             logger.error("ERROR: Incomplete AWS credentials.")
             sys.exit(1)
         except Exception as e:
-            logger.error(f"ERROR: An error occurred while checking the S3 bucket: {e}")
+            logger.error(f"ERROR: An error occurred while checking the AWS S3 bucket: {e}")
             sys.exit(1)
 
         # delete all files in subdirectories to set initial state for application
