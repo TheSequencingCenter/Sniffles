@@ -75,14 +75,15 @@ def clear_all_files() -> None:
     logger.info("Clear files...")
     clear_files()
 
-def copy_sample_files_S3_to_EC2(sample_name: str) -> None:
+def copy_sample_files_S3_to_EC2(bucket_name: str, sample_name: str) -> None:
     """Copy sample files from S3 to EC2.
     
-    Parameters:
-        --recursive : Copy all files recursively.
+     Parameters:
+       --recursive : Copy files recursively.
     """
     command = (
-        "aws s3 cp s3://seqcenter-samples/{sample_name}/ "
+        # f"aws s3 cp s3://{bucket_name}/{sample_name}/ "
+        f"aws s3 cp s3://{bucket_name}/ "
         f"{os.environ['POD5_FILES_DIR']} "
         "--recursive"
     )
@@ -179,9 +180,10 @@ def run_sniffles() -> None:
 if __name__ == "__main__":
 
     try:
-        # set sample name
+        # set S3 bucket name and sample name
         parser = argparse.ArgumentParser()
-        parser.add_argument("--samplename", required=True, help="Enter a sample name for this run.")
+        parser.add_argument("-b", "--bucketname", required=True, help="Enter a bucket name for this run.")
+        parser.add_argument("-s", "--samplename", required=True, help="Enter a sample name for this run.")
         args = parser.parse_args()
             
         logger.info("Start Sniffles...")
@@ -203,7 +205,8 @@ if __name__ == "__main__":
         # 1. copy sample files from S3 seqcenter-samples bucket to EC2 POD5 directory
         try:
             logger.info("Copy sample POD5 files from S3 to EC2...")
-            copy_sample_files_S3_to_EC2(args.samplename)
+            copy_sample_files_S3_to_EC2(args.bucketname, args.samplename)
+            sys.exit(0)
         except Exception as e:
             logger.error(f"ERROR: Failed to copy sample POD5 files from S3 to EC2: {e}")
 
