@@ -106,7 +106,6 @@ def copy_sample_files_S3_to_EC2(bucket_name: str, sample_name: str) -> None:
        --recursive : Copy files recursively.  This is a required parameter.
     """
     command = (
-        # f"aws s3 cp s3://{bucket_name}/{sample_name}/ "
         f"aws s3 cp s3://{bucket_name}/ "
         f"{os.environ['POD5_FILES_DIR']} "
         "--recursive"
@@ -200,6 +199,17 @@ def run_sniffles() -> None:
     )
     run_command(command)
 
+def copy_vcf_file_to_s3(bucket_name: str, sample_name: str) -> None:
+    """Copy the VCF file to the specified S3 bucket."""
+    try:
+        output_dir = os.environ['SNIFFLES_FILES_DIR']
+        vcf_file   = f"{output_dir}/{sample_name}.vcf.gz"
+        command    = f"aws s3 cp {vcf_file} s3://{bucket_name}/"
+        run_command(command)
+    except Exception as e:
+        logger.error(f"ERROR: Failed to copy VCF file to S3: {e}")
+        sys.exit(1)
+
 # main entry point
 if __name__ == "__main__":
 
@@ -289,6 +299,14 @@ if __name__ == "__main__":
             run_sniffles()
         except Exception as e:
             logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
+            sys.exit(1)
+
+        # 6. copy VCF file to S3 bucket
+        try:
+            logger.info("Copy VCF file to S3 bucket...")
+            copy_vcf_file_to_s3(args.bucketname, args.samplename)
+        except Exception as e:
+            logger.error(f"ERROR: Failed to copy VCF file to S3 bucket: {e}")
             sys.exit(1)
 
         logger.info("Finish Sniffles...")
