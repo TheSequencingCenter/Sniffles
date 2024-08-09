@@ -1,1 +1,1 @@
-nohup time python sniffles.py > sniffles.log 2>&1 &
+nohup time python sniffles.py -b seqcenter-samples -s test > sniffles.log 2>&1 &
