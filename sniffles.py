@@ -71,7 +71,7 @@ def set_environment_variables(sample_name: str) -> None:
 
     # SNIFFLES
     os.environ['SNIFFLES_FILES_DIR'] = f"{os.environ['OUTPUT_DIR']}/sniffles_output"
-    os.environ['SNIFFLES_VCF_FILE']  = f"{os.environ['SNIFFLES_FILES_DIR']}/sniffles.vcf.gz"
+    os.environ['SNIFFLES_VCF_FILE']  = f"{os.environ['SNIFFLES_FILES_DIR']}/{sample_name}.vcf.gz"
 
     # THREADS
     os.environ['THREADS']            = '14'
