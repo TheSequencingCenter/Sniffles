@@ -301,8 +301,6 @@ if __name__ == "__main__":
             logger.error(f"ERROR: Failed to perform structural variant calling: {e}")
             sys.exit(1)
 
-        logger.info("Finish Sniffles...")
-
         # 6. copy VCF file to S3 bucket
         try:
             logger.info("Copy VCF file to S3 bucket...")
@@ -310,6 +308,8 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(f"ERROR: Failed to copy VCF file to S3 bucket: {e}")
             sys.exit(1)
+
+        logger.info("Finish Sniffles...")
 
     except Exception as e:
         logger.error(f"ERROR: an error occurred in main: {e}")
